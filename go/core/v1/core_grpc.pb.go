@@ -4,7 +4,7 @@
 // - protoc             v3.21.12
 // source: core/v1/core.proto
 
-package servicev1
+package corev1
 
 import (
 	context "context"
@@ -19,9 +19,9 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	CoreService_GetServices_FullMethodName     = "/core.v1.CoreService/GetServices"
-	CoreService_GetService_FullMethodName      = "/core.v1.CoreService/GetService"
-	CoreService_IsServiceActive_FullMethodName = "/core.v1.CoreService/IsServiceActive"
+	CoreService_GetServices_FullMethodName        = "/core.v1.CoreService/GetServices"
+	CoreService_GetService_FullMethodName         = "/core.v1.CoreService/GetService"
+	CoreService_CheckServiceActive_FullMethodName = "/core.v1.CoreService/CheckServiceActive"
 )
 
 // CoreServiceClient is the client API for CoreService service.
@@ -30,7 +30,7 @@ const (
 type CoreServiceClient interface {
 	GetServices(ctx context.Context, in *GetServicesRequest, opts ...grpc.CallOption) (*GetServicesResponse, error)
 	GetService(ctx context.Context, in *GetServiceRequest, opts ...grpc.CallOption) (*GetServiceResponse, error)
-	IsServiceActive(ctx context.Context, in *IsServiceActiveRequest, opts ...grpc.CallOption) (*IsServiceActiveResponse, error)
+	CheckServiceActive(ctx context.Context, in *CheckServiceActiveRequest, opts ...grpc.CallOption) (*CheckServiceActiveResponse, error)
 }
 
 type coreServiceClient struct {
@@ -61,10 +61,10 @@ func (c *coreServiceClient) GetService(ctx context.Context, in *GetServiceReques
 	return out, nil
 }
 
-func (c *coreServiceClient) IsServiceActive(ctx context.Context, in *IsServiceActiveRequest, opts ...grpc.CallOption) (*IsServiceActiveResponse, error) {
+func (c *coreServiceClient) CheckServiceActive(ctx context.Context, in *CheckServiceActiveRequest, opts ...grpc.CallOption) (*CheckServiceActiveResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(IsServiceActiveResponse)
-	err := c.cc.Invoke(ctx, CoreService_IsServiceActive_FullMethodName, in, out, cOpts...)
+	out := new(CheckServiceActiveResponse)
+	err := c.cc.Invoke(ctx, CoreService_CheckServiceActive_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -77,7 +77,7 @@ func (c *coreServiceClient) IsServiceActive(ctx context.Context, in *IsServiceAc
 type CoreServiceServer interface {
 	GetServices(context.Context, *GetServicesRequest) (*GetServicesResponse, error)
 	GetService(context.Context, *GetServiceRequest) (*GetServiceResponse, error)
-	IsServiceActive(context.Context, *IsServiceActiveRequest) (*IsServiceActiveResponse, error)
+	CheckServiceActive(context.Context, *CheckServiceActiveRequest) (*CheckServiceActiveResponse, error)
 	mustEmbedUnimplementedCoreServiceServer()
 }
 
@@ -94,8 +94,8 @@ func (UnimplementedCoreServiceServer) GetServices(context.Context, *GetServicesR
 func (UnimplementedCoreServiceServer) GetService(context.Context, *GetServiceRequest) (*GetServiceResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetService not implemented")
 }
-func (UnimplementedCoreServiceServer) IsServiceActive(context.Context, *IsServiceActiveRequest) (*IsServiceActiveResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method IsServiceActive not implemented")
+func (UnimplementedCoreServiceServer) CheckServiceActive(context.Context, *CheckServiceActiveRequest) (*CheckServiceActiveResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CheckServiceActive not implemented")
 }
 func (UnimplementedCoreServiceServer) mustEmbedUnimplementedCoreServiceServer() {}
 func (UnimplementedCoreServiceServer) testEmbeddedByValue()                     {}
@@ -154,20 +154,20 @@ func _CoreService_GetService_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
-func _CoreService_IsServiceActive_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(IsServiceActiveRequest)
+func _CoreService_CheckServiceActive_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CheckServiceActiveRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CoreServiceServer).IsServiceActive(ctx, in)
+		return srv.(CoreServiceServer).CheckServiceActive(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: CoreService_IsServiceActive_FullMethodName,
+		FullMethod: CoreService_CheckServiceActive_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CoreServiceServer).IsServiceActive(ctx, req.(*IsServiceActiveRequest))
+		return srv.(CoreServiceServer).CheckServiceActive(ctx, req.(*CheckServiceActiveRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -188,8 +188,8 @@ var CoreService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _CoreService_GetService_Handler,
 		},
 		{
-			MethodName: "IsServiceActive",
-			Handler:    _CoreService_IsServiceActive_Handler,
+			MethodName: "CheckServiceActive",
+			Handler:    _CoreService_CheckServiceActive_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -4,28 +4,20 @@ package core.v1;
 
 import "third_party/validate/validate.proto";
 
-option go_package = "github.com/mandacode-com/seregeti-proto/go/service/v1;servicev1";
+option go_package = "github.com/mandacode-com/seregeti-proto/go/core/v1;corev1";
 
 service CoreService {
   rpc GetServices(GetServicesRequest) returns (GetServicesResponse);
   rpc GetService(GetServiceRequest) returns (GetServiceResponse);
-  rpc IsServiceActive(IsServiceActiveRequest) returns (IsServiceActiveResponse);
+  rpc CheckServiceActive(CheckServiceActiveRequest) returns (CheckServiceActiveResponse);
 }
 
 message Service {
-  string id = 1 [
-    (validate.rules).string = {uuid: true}
-  ]; // Unique identifier for the service
-  string name = 2 [
-    (validate.rules).string = {min_len: 1}
-  ]; // Name of the service
+  string id = 1 [(validate.rules).string = {uuid: true}]; // Unique identifier for the service
+  string name = 2 [(validate.rules).string = {min_len: 1}]; // Name of the service
   string description = 3; // Description of the service
-  int64 created_at = 4 [
-    (validate.rules).int64 = {gt: 0}
-  ]; // Creation timestamp in Unix format
-  int64 updated_at = 5 [
-    (validate.rules).int64 = {gt: 0}
-  ]; // Last update timestamp in Unix format
+  int64 created_at = 4 [(validate.rules).int64 = {gt: 0}]; // Creation timestamp in Unix format
+  int64 updated_at = 5 [(validate.rules).int64 = {gt: 0}]; // Last update timestamp in Unix format
   bool is_active = 6; // Indicates if the service is active
 }
 
@@ -38,21 +30,18 @@ message GetServicesResponse {
 }
 
 message GetServiceRequest {
-  string id = 1 [
-    (validate.rules).string = {uuid: true}
-  ]; // Unique identifier for the service to retrieve
+  string id = 1 [(validate.rules).string = {uuid: true}]; // Unique identifier for the service to retrieve
 }
 
 message GetServiceResponse {
   Service service = 1; // The requested service details
 }
 
-message IsServiceActiveRequest {
-  string id = 1 [
-    (validate.rules).string = {uuid: true}
-  ]; // Unique identifier for the service to check
+message CheckServiceActiveRequest {
+  string id = 1 [(validate.rules).string = {uuid: true}]; // Unique identifier for the service to check
 }
 
-message IsServiceActiveResponse {
+message CheckServiceActiveResponse {
   bool is_active = 1; // Indicates if the service is active
+  string message = 2; // Additional message, e.g., reason for inactivity
 }
