@@ -7,7 +7,6 @@ import "third_party/validate/validate.proto";
 option go_package = "github.com/mandacode-com/seregeti-proto/go/core/v1;corev1";
 
 service CoreService {
-  rpc GetServices(GetServicesRequest) returns (GetServicesResponse);
   rpc GetService(GetServiceRequest) returns (GetServiceResponse);
   rpc IsActiveService(GetIsActiveServiceRequest) returns (GetIsActiveServiceResponse);
   rpc IsAvailableService(GetIsAvailableServiceRequest) returns (GetIsAvailableServiceResponse);
@@ -20,14 +19,6 @@ message Service {
   int64 created_at = 4 [(validate.rules).int64 = {gt: 0}]; // Creation timestamp in Unix format
   int64 updated_at = 5 [(validate.rules).int64 = {gt: 0}]; // Last update timestamp in Unix format
   bool is_active = 6; // Indicates if the service is active
-}
-
-message GetServicesRequest {
-  // No fields needed for this request
-}
-
-message GetServicesResponse {
-  repeated Service services = 1; // List of services
 }
 
 message GetServiceRequest {

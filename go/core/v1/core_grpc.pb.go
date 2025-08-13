@@ -19,7 +19,6 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	CoreService_GetServices_FullMethodName        = "/core.v1.CoreService/GetServices"
 	CoreService_GetService_FullMethodName         = "/core.v1.CoreService/GetService"
 	CoreService_IsActiveService_FullMethodName    = "/core.v1.CoreService/IsActiveService"
 	CoreService_IsAvailableService_FullMethodName = "/core.v1.CoreService/IsAvailableService"
@@ -29,7 +28,6 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type CoreServiceClient interface {
-	GetServices(ctx context.Context, in *GetServicesRequest, opts ...grpc.CallOption) (*GetServicesResponse, error)
 	GetService(ctx context.Context, in *GetServiceRequest, opts ...grpc.CallOption) (*GetServiceResponse, error)
 	IsActiveService(ctx context.Context, in *GetIsActiveServiceRequest, opts ...grpc.CallOption) (*GetIsActiveServiceResponse, error)
 	IsAvailableService(ctx context.Context, in *GetIsAvailableServiceRequest, opts ...grpc.CallOption) (*GetIsAvailableServiceResponse, error)
@@ -41,16 +39,6 @@ type coreServiceClient struct {
 
 func NewCoreServiceClient(cc grpc.ClientConnInterface) CoreServiceClient {
 	return &coreServiceClient{cc}
-}
-
-func (c *coreServiceClient) GetServices(ctx context.Context, in *GetServicesRequest, opts ...grpc.CallOption) (*GetServicesResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetServicesResponse)
-	err := c.cc.Invoke(ctx, CoreService_GetServices_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
 }
 
 func (c *coreServiceClient) GetService(ctx context.Context, in *GetServiceRequest, opts ...grpc.CallOption) (*GetServiceResponse, error) {
@@ -87,7 +75,6 @@ func (c *coreServiceClient) IsAvailableService(ctx context.Context, in *GetIsAva
 // All implementations must embed UnimplementedCoreServiceServer
 // for forward compatibility.
 type CoreServiceServer interface {
-	GetServices(context.Context, *GetServicesRequest) (*GetServicesResponse, error)
 	GetService(context.Context, *GetServiceRequest) (*GetServiceResponse, error)
 	IsActiveService(context.Context, *GetIsActiveServiceRequest) (*GetIsActiveServiceResponse, error)
 	IsAvailableService(context.Context, *GetIsAvailableServiceRequest) (*GetIsAvailableServiceResponse, error)
@@ -101,9 +88,6 @@ type CoreServiceServer interface {
 // pointer dereference when methods are called.
 type UnimplementedCoreServiceServer struct{}
 
-func (UnimplementedCoreServiceServer) GetServices(context.Context, *GetServicesRequest) (*GetServicesResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetServices not implemented")
-}
 func (UnimplementedCoreServiceServer) GetService(context.Context, *GetServiceRequest) (*GetServiceResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetService not implemented")
 }
@@ -132,24 +116,6 @@ func RegisterCoreServiceServer(s grpc.ServiceRegistrar, srv CoreServiceServer) {
 		t.testEmbeddedByValue()
 	}
 	s.RegisterService(&CoreService_ServiceDesc, srv)
-}
-
-func _CoreService_GetServices_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetServicesRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(CoreServiceServer).GetServices(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: CoreService_GetServices_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CoreServiceServer).GetServices(ctx, req.(*GetServicesRequest))
-	}
-	return interceptor(ctx, in, info, handler)
 }
 
 func _CoreService_GetService_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -213,10 +179,6 @@ var CoreService_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "core.v1.CoreService",
 	HandlerType: (*CoreServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
-		{
-			MethodName: "GetServices",
-			Handler:    _CoreService_GetServices_Handler,
-		},
 		{
 			MethodName: "GetService",
 			Handler:    _CoreService_GetService_Handler,
