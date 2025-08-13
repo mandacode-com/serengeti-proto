@@ -9,7 +9,8 @@ option go_package = "github.com/mandacode-com/seregeti-proto/go/core/v1;corev1";
 service CoreService {
   rpc GetServices(GetServicesRequest) returns (GetServicesResponse);
   rpc GetService(GetServiceRequest) returns (GetServiceResponse);
-  rpc CheckServiceActive(CheckServiceActiveRequest) returns (CheckServiceActiveResponse);
+  rpc IsActiveService(GetIsActiveServiceRequest) returns (GetIsActiveServiceResponse);
+  rpc IsAvailableService(GetIsAvailableServiceRequest) returns (GetIsAvailableServiceResponse);
 }
 
 message Service {
@@ -34,14 +35,21 @@ message GetServiceRequest {
 }
 
 message GetServiceResponse {
-  Service service = 1; // The requested service details
+  optional Service service = 1; // The requested service details
 }
 
-message CheckServiceActiveRequest {
+message GetIsActiveServiceRequest {
   string id = 1 [(validate.rules).string = {uuid: true}]; // Unique identifier for the service to check
 }
 
-message CheckServiceActiveResponse {
+message GetIsActiveServiceResponse {
   bool is_active = 1; // Indicates if the service is active
-  string message = 2; // Additional message, e.g., reason for inactivity
+}
+
+message GetIsAvailableServiceRequest {
+  string id = 1 [(validate.rules).string = {uuid: true}]; // Unique identifier for the service to check
+}
+
+message GetIsAvailableServiceResponse {
+  bool is_available = 1; // Indicates if the service is available
 }

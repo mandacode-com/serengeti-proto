@@ -575,33 +575,37 @@ func (m *GetServiceResponse) validate(all bool) error {
 
 	var errors []error
 
-	if all {
-		switch v := interface{}(m.GetService()).(type) {
-		case interface{ ValidateAll() error }:
-			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, GetServiceResponseValidationError{
-					field:  "Service",
-					reason: "embedded message failed validation",
-					cause:  err,
-				})
+	if m.Service != nil {
+
+		if all {
+			switch v := interface{}(m.GetService()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, GetServiceResponseValidationError{
+						field:  "Service",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, GetServiceResponseValidationError{
+						field:  "Service",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
 			}
-		case interface{ Validate() error }:
+		} else if v, ok := interface{}(m.GetService()).(interface{ Validate() error }); ok {
 			if err := v.Validate(); err != nil {
-				errors = append(errors, GetServiceResponseValidationError{
+				return GetServiceResponseValidationError{
 					field:  "Service",
 					reason: "embedded message failed validation",
 					cause:  err,
-				})
+				}
 			}
 		}
-	} else if v, ok := interface{}(m.GetService()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return GetServiceResponseValidationError{
-				field:  "Service",
-				reason: "embedded message failed validation",
-				cause:  err,
-			}
-		}
+
 	}
 
 	if len(errors) > 0 {
@@ -684,22 +688,22 @@ var _ interface {
 	ErrorName() string
 } = GetServiceResponseValidationError{}
 
-// Validate checks the field values on CheckServiceActiveRequest with the rules
+// Validate checks the field values on GetIsActiveServiceRequest with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, the first error encountered is returned, or nil if there are no violations.
-func (m *CheckServiceActiveRequest) Validate() error {
+func (m *GetIsActiveServiceRequest) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on CheckServiceActiveRequest with the
+// ValidateAll checks the field values on GetIsActiveServiceRequest with the
 // rules defined in the proto definition for this message. If any rules are
 // violated, the result is a list of violation errors wrapped in
-// CheckServiceActiveRequestMultiError, or nil if none found.
-func (m *CheckServiceActiveRequest) ValidateAll() error {
+// GetIsActiveServiceRequestMultiError, or nil if none found.
+func (m *GetIsActiveServiceRequest) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *CheckServiceActiveRequest) validate(all bool) error {
+func (m *GetIsActiveServiceRequest) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -707,7 +711,7 @@ func (m *CheckServiceActiveRequest) validate(all bool) error {
 	var errors []error
 
 	if err := m._validateUuid(m.GetId()); err != nil {
-		err = CheckServiceActiveRequestValidationError{
+		err = GetIsActiveServiceRequestValidationError{
 			field:  "Id",
 			reason: "value must be a valid UUID",
 			cause:  err,
@@ -719,13 +723,13 @@ func (m *CheckServiceActiveRequest) validate(all bool) error {
 	}
 
 	if len(errors) > 0 {
-		return CheckServiceActiveRequestMultiError(errors)
+		return GetIsActiveServiceRequestMultiError(errors)
 	}
 
 	return nil
 }
 
-func (m *CheckServiceActiveRequest) _validateUuid(uuid string) error {
+func (m *GetIsActiveServiceRequest) _validateUuid(uuid string) error {
 	if matched := _core_uuidPattern.MatchString(uuid); !matched {
 		return errors.New("invalid uuid format")
 	}
@@ -733,13 +737,13 @@ func (m *CheckServiceActiveRequest) _validateUuid(uuid string) error {
 	return nil
 }
 
-// CheckServiceActiveRequestMultiError is an error wrapping multiple validation
-// errors returned by CheckServiceActiveRequest.ValidateAll() if the
+// GetIsActiveServiceRequestMultiError is an error wrapping multiple validation
+// errors returned by GetIsActiveServiceRequest.ValidateAll() if the
 // designated constraints aren't met.
-type CheckServiceActiveRequestMultiError []error
+type GetIsActiveServiceRequestMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m CheckServiceActiveRequestMultiError) Error() string {
+func (m GetIsActiveServiceRequestMultiError) Error() string {
 	msgs := make([]string, 0, len(m))
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -748,11 +752,11 @@ func (m CheckServiceActiveRequestMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m CheckServiceActiveRequestMultiError) AllErrors() []error { return m }
+func (m GetIsActiveServiceRequestMultiError) AllErrors() []error { return m }
 
-// CheckServiceActiveRequestValidationError is the validation error returned by
-// CheckServiceActiveRequest.Validate if the designated constraints aren't met.
-type CheckServiceActiveRequestValidationError struct {
+// GetIsActiveServiceRequestValidationError is the validation error returned by
+// GetIsActiveServiceRequest.Validate if the designated constraints aren't met.
+type GetIsActiveServiceRequestValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -760,24 +764,24 @@ type CheckServiceActiveRequestValidationError struct {
 }
 
 // Field function returns field value.
-func (e CheckServiceActiveRequestValidationError) Field() string { return e.field }
+func (e GetIsActiveServiceRequestValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e CheckServiceActiveRequestValidationError) Reason() string { return e.reason }
+func (e GetIsActiveServiceRequestValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e CheckServiceActiveRequestValidationError) Cause() error { return e.cause }
+func (e GetIsActiveServiceRequestValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e CheckServiceActiveRequestValidationError) Key() bool { return e.key }
+func (e GetIsActiveServiceRequestValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e CheckServiceActiveRequestValidationError) ErrorName() string {
-	return "CheckServiceActiveRequestValidationError"
+func (e GetIsActiveServiceRequestValidationError) ErrorName() string {
+	return "GetIsActiveServiceRequestValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e CheckServiceActiveRequestValidationError) Error() string {
+func (e GetIsActiveServiceRequestValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -789,14 +793,14 @@ func (e CheckServiceActiveRequestValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sCheckServiceActiveRequest.%s: %s%s",
+		"invalid %sGetIsActiveServiceRequest.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = CheckServiceActiveRequestValidationError{}
+var _ error = GetIsActiveServiceRequestValidationError{}
 
 var _ interface {
 	Field() string
@@ -804,24 +808,24 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = CheckServiceActiveRequestValidationError{}
+} = GetIsActiveServiceRequestValidationError{}
 
-// Validate checks the field values on CheckServiceActiveResponse with the
+// Validate checks the field values on GetIsActiveServiceResponse with the
 // rules defined in the proto definition for this message. If any rules are
 // violated, the first error encountered is returned, or nil if there are no violations.
-func (m *CheckServiceActiveResponse) Validate() error {
+func (m *GetIsActiveServiceResponse) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on CheckServiceActiveResponse with the
+// ValidateAll checks the field values on GetIsActiveServiceResponse with the
 // rules defined in the proto definition for this message. If any rules are
 // violated, the result is a list of violation errors wrapped in
-// CheckServiceActiveResponseMultiError, or nil if none found.
-func (m *CheckServiceActiveResponse) ValidateAll() error {
+// GetIsActiveServiceResponseMultiError, or nil if none found.
+func (m *GetIsActiveServiceResponse) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *CheckServiceActiveResponse) validate(all bool) error {
+func (m *GetIsActiveServiceResponse) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -830,22 +834,20 @@ func (m *CheckServiceActiveResponse) validate(all bool) error {
 
 	// no validation rules for IsActive
 
-	// no validation rules for Message
-
 	if len(errors) > 0 {
-		return CheckServiceActiveResponseMultiError(errors)
+		return GetIsActiveServiceResponseMultiError(errors)
 	}
 
 	return nil
 }
 
-// CheckServiceActiveResponseMultiError is an error wrapping multiple
-// validation errors returned by CheckServiceActiveResponse.ValidateAll() if
+// GetIsActiveServiceResponseMultiError is an error wrapping multiple
+// validation errors returned by GetIsActiveServiceResponse.ValidateAll() if
 // the designated constraints aren't met.
-type CheckServiceActiveResponseMultiError []error
+type GetIsActiveServiceResponseMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m CheckServiceActiveResponseMultiError) Error() string {
+func (m GetIsActiveServiceResponseMultiError) Error() string {
 	msgs := make([]string, 0, len(m))
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -854,11 +856,11 @@ func (m CheckServiceActiveResponseMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m CheckServiceActiveResponseMultiError) AllErrors() []error { return m }
+func (m GetIsActiveServiceResponseMultiError) AllErrors() []error { return m }
 
-// CheckServiceActiveResponseValidationError is the validation error returned
-// by CheckServiceActiveResponse.Validate if the designated constraints aren't met.
-type CheckServiceActiveResponseValidationError struct {
+// GetIsActiveServiceResponseValidationError is the validation error returned
+// by GetIsActiveServiceResponse.Validate if the designated constraints aren't met.
+type GetIsActiveServiceResponseValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -866,24 +868,24 @@ type CheckServiceActiveResponseValidationError struct {
 }
 
 // Field function returns field value.
-func (e CheckServiceActiveResponseValidationError) Field() string { return e.field }
+func (e GetIsActiveServiceResponseValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e CheckServiceActiveResponseValidationError) Reason() string { return e.reason }
+func (e GetIsActiveServiceResponseValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e CheckServiceActiveResponseValidationError) Cause() error { return e.cause }
+func (e GetIsActiveServiceResponseValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e CheckServiceActiveResponseValidationError) Key() bool { return e.key }
+func (e GetIsActiveServiceResponseValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e CheckServiceActiveResponseValidationError) ErrorName() string {
-	return "CheckServiceActiveResponseValidationError"
+func (e GetIsActiveServiceResponseValidationError) ErrorName() string {
+	return "GetIsActiveServiceResponseValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e CheckServiceActiveResponseValidationError) Error() string {
+func (e GetIsActiveServiceResponseValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -895,14 +897,14 @@ func (e CheckServiceActiveResponseValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sCheckServiceActiveResponse.%s: %s%s",
+		"invalid %sGetIsActiveServiceResponse.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = CheckServiceActiveResponseValidationError{}
+var _ error = GetIsActiveServiceResponseValidationError{}
 
 var _ interface {
 	Field() string
@@ -910,4 +912,232 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = CheckServiceActiveResponseValidationError{}
+} = GetIsActiveServiceResponseValidationError{}
+
+// Validate checks the field values on GetIsAvailableServiceRequest with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *GetIsAvailableServiceRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on GetIsAvailableServiceRequest with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// GetIsAvailableServiceRequestMultiError, or nil if none found.
+func (m *GetIsAvailableServiceRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *GetIsAvailableServiceRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if err := m._validateUuid(m.GetId()); err != nil {
+		err = GetIsAvailableServiceRequestValidationError{
+			field:  "Id",
+			reason: "value must be a valid UUID",
+			cause:  err,
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(errors) > 0 {
+		return GetIsAvailableServiceRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+func (m *GetIsAvailableServiceRequest) _validateUuid(uuid string) error {
+	if matched := _core_uuidPattern.MatchString(uuid); !matched {
+		return errors.New("invalid uuid format")
+	}
+
+	return nil
+}
+
+// GetIsAvailableServiceRequestMultiError is an error wrapping multiple
+// validation errors returned by GetIsAvailableServiceRequest.ValidateAll() if
+// the designated constraints aren't met.
+type GetIsAvailableServiceRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m GetIsAvailableServiceRequestMultiError) Error() string {
+	msgs := make([]string, 0, len(m))
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m GetIsAvailableServiceRequestMultiError) AllErrors() []error { return m }
+
+// GetIsAvailableServiceRequestValidationError is the validation error returned
+// by GetIsAvailableServiceRequest.Validate if the designated constraints
+// aren't met.
+type GetIsAvailableServiceRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e GetIsAvailableServiceRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e GetIsAvailableServiceRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e GetIsAvailableServiceRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e GetIsAvailableServiceRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e GetIsAvailableServiceRequestValidationError) ErrorName() string {
+	return "GetIsAvailableServiceRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e GetIsAvailableServiceRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sGetIsAvailableServiceRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = GetIsAvailableServiceRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = GetIsAvailableServiceRequestValidationError{}
+
+// Validate checks the field values on GetIsAvailableServiceResponse with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *GetIsAvailableServiceResponse) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on GetIsAvailableServiceResponse with
+// the rules defined in the proto definition for this message. If any rules
+// are violated, the result is a list of violation errors wrapped in
+// GetIsAvailableServiceResponseMultiError, or nil if none found.
+func (m *GetIsAvailableServiceResponse) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *GetIsAvailableServiceResponse) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for IsAvailable
+
+	if len(errors) > 0 {
+		return GetIsAvailableServiceResponseMultiError(errors)
+	}
+
+	return nil
+}
+
+// GetIsAvailableServiceResponseMultiError is an error wrapping multiple
+// validation errors returned by GetIsAvailableServiceResponse.ValidateAll()
+// if the designated constraints aren't met.
+type GetIsAvailableServiceResponseMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m GetIsAvailableServiceResponseMultiError) Error() string {
+	msgs := make([]string, 0, len(m))
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m GetIsAvailableServiceResponseMultiError) AllErrors() []error { return m }
+
+// GetIsAvailableServiceResponseValidationError is the validation error
+// returned by GetIsAvailableServiceResponse.Validate if the designated
+// constraints aren't met.
+type GetIsAvailableServiceResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e GetIsAvailableServiceResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e GetIsAvailableServiceResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e GetIsAvailableServiceResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e GetIsAvailableServiceResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e GetIsAvailableServiceResponseValidationError) ErrorName() string {
+	return "GetIsAvailableServiceResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e GetIsAvailableServiceResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sGetIsAvailableServiceResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = GetIsAvailableServiceResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = GetIsAvailableServiceResponseValidationError{}

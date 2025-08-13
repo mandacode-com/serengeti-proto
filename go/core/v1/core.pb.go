@@ -232,7 +232,7 @@ func (x *GetServiceRequest) GetId() string {
 
 type GetServiceResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Service       *Service               `protobuf:"bytes,1,opt,name=service,proto3" json:"service,omitempty"` // The requested service details
+	Service       *Service               `protobuf:"bytes,1,opt,name=service,proto3,oneof" json:"service,omitempty"` // The requested service details
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -274,27 +274,27 @@ func (x *GetServiceResponse) GetService() *Service {
 	return nil
 }
 
-type CheckServiceActiveRequest struct {
+type GetIsActiveServiceRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"` // Unique identifier for the service to check
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *CheckServiceActiveRequest) Reset() {
-	*x = CheckServiceActiveRequest{}
+func (x *GetIsActiveServiceRequest) Reset() {
+	*x = GetIsActiveServiceRequest{}
 	mi := &file_core_v1_core_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *CheckServiceActiveRequest) String() string {
+func (x *GetIsActiveServiceRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*CheckServiceActiveRequest) ProtoMessage() {}
+func (*GetIsActiveServiceRequest) ProtoMessage() {}
 
-func (x *CheckServiceActiveRequest) ProtoReflect() protoreflect.Message {
+func (x *GetIsActiveServiceRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_core_v1_core_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -306,40 +306,39 @@ func (x *CheckServiceActiveRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use CheckServiceActiveRequest.ProtoReflect.Descriptor instead.
-func (*CheckServiceActiveRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use GetIsActiveServiceRequest.ProtoReflect.Descriptor instead.
+func (*GetIsActiveServiceRequest) Descriptor() ([]byte, []int) {
 	return file_core_v1_core_proto_rawDescGZIP(), []int{5}
 }
 
-func (x *CheckServiceActiveRequest) GetId() string {
+func (x *GetIsActiveServiceRequest) GetId() string {
 	if x != nil {
 		return x.Id
 	}
 	return ""
 }
 
-type CheckServiceActiveResponse struct {
+type GetIsActiveServiceResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	IsActive      bool                   `protobuf:"varint,1,opt,name=is_active,json=isActive,proto3" json:"is_active,omitempty"` // Indicates if the service is active
-	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`                    // Additional message, e.g., reason for inactivity
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *CheckServiceActiveResponse) Reset() {
-	*x = CheckServiceActiveResponse{}
+func (x *GetIsActiveServiceResponse) Reset() {
+	*x = GetIsActiveServiceResponse{}
 	mi := &file_core_v1_core_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *CheckServiceActiveResponse) String() string {
+func (x *GetIsActiveServiceResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*CheckServiceActiveResponse) ProtoMessage() {}
+func (*GetIsActiveServiceResponse) ProtoMessage() {}
 
-func (x *CheckServiceActiveResponse) ProtoReflect() protoreflect.Message {
+func (x *GetIsActiveServiceResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_core_v1_core_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -351,23 +350,104 @@ func (x *CheckServiceActiveResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use CheckServiceActiveResponse.ProtoReflect.Descriptor instead.
-func (*CheckServiceActiveResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use GetIsActiveServiceResponse.ProtoReflect.Descriptor instead.
+func (*GetIsActiveServiceResponse) Descriptor() ([]byte, []int) {
 	return file_core_v1_core_proto_rawDescGZIP(), []int{6}
 }
 
-func (x *CheckServiceActiveResponse) GetIsActive() bool {
+func (x *GetIsActiveServiceResponse) GetIsActive() bool {
 	if x != nil {
 		return x.IsActive
 	}
 	return false
 }
 
-func (x *CheckServiceActiveResponse) GetMessage() string {
+type GetIsAvailableServiceRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"` // Unique identifier for the service to check
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetIsAvailableServiceRequest) Reset() {
+	*x = GetIsAvailableServiceRequest{}
+	mi := &file_core_v1_core_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetIsAvailableServiceRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetIsAvailableServiceRequest) ProtoMessage() {}
+
+func (x *GetIsAvailableServiceRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_core_v1_core_proto_msgTypes[7]
 	if x != nil {
-		return x.Message
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetIsAvailableServiceRequest.ProtoReflect.Descriptor instead.
+func (*GetIsAvailableServiceRequest) Descriptor() ([]byte, []int) {
+	return file_core_v1_core_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *GetIsAvailableServiceRequest) GetId() string {
+	if x != nil {
+		return x.Id
 	}
 	return ""
+}
+
+type GetIsAvailableServiceResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	IsAvailable   bool                   `protobuf:"varint,1,opt,name=is_available,json=isAvailable,proto3" json:"is_available,omitempty"` // Indicates if the service is available
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetIsAvailableServiceResponse) Reset() {
+	*x = GetIsAvailableServiceResponse{}
+	mi := &file_core_v1_core_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetIsAvailableServiceResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetIsAvailableServiceResponse) ProtoMessage() {}
+
+func (x *GetIsAvailableServiceResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_core_v1_core_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetIsAvailableServiceResponse.ProtoReflect.Descriptor instead.
+func (*GetIsAvailableServiceResponse) Descriptor() ([]byte, []int) {
+	return file_core_v1_core_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *GetIsAvailableServiceResponse) GetIsAvailable() bool {
+	if x != nil {
+		return x.IsAvailable
+	}
+	return false
 }
 
 var File_core_v1_core_proto protoreflect.FileDescriptor
@@ -388,19 +468,25 @@ const file_core_v1_core_proto_rawDesc = "" +
 	"\x13GetServicesResponse\x12,\n" +
 	"\bservices\x18\x01 \x03(\v2\x10.core.v1.ServiceR\bservices\"-\n" +
 	"\x11GetServiceRequest\x12\x18\n" +
-	"\x02id\x18\x01 \x01(\tB\b\xfaB\x05r\x03\xb0\x01\x01R\x02id\"@\n" +
-	"\x12GetServiceResponse\x12*\n" +
-	"\aservice\x18\x01 \x01(\v2\x10.core.v1.ServiceR\aservice\"5\n" +
-	"\x19CheckServiceActiveRequest\x12\x18\n" +
-	"\x02id\x18\x01 \x01(\tB\b\xfaB\x05r\x03\xb0\x01\x01R\x02id\"S\n" +
-	"\x1aCheckServiceActiveResponse\x12\x1b\n" +
-	"\tis_active\x18\x01 \x01(\bR\bisActive\x12\x18\n" +
-	"\amessage\x18\x02 \x01(\tR\amessage2\xfd\x01\n" +
+	"\x02id\x18\x01 \x01(\tB\b\xfaB\x05r\x03\xb0\x01\x01R\x02id\"Q\n" +
+	"\x12GetServiceResponse\x12/\n" +
+	"\aservice\x18\x01 \x01(\v2\x10.core.v1.ServiceH\x00R\aservice\x88\x01\x01B\n" +
+	"\n" +
+	"\b_service\"5\n" +
+	"\x19GetIsActiveServiceRequest\x12\x18\n" +
+	"\x02id\x18\x01 \x01(\tB\b\xfaB\x05r\x03\xb0\x01\x01R\x02id\"9\n" +
+	"\x1aGetIsActiveServiceResponse\x12\x1b\n" +
+	"\tis_active\x18\x01 \x01(\bR\bisActive\"8\n" +
+	"\x1cGetIsAvailableServiceRequest\x12\x18\n" +
+	"\x02id\x18\x01 \x01(\tB\b\xfaB\x05r\x03\xb0\x01\x01R\x02id\"B\n" +
+	"\x1dGetIsAvailableServiceResponse\x12!\n" +
+	"\fis_available\x18\x01 \x01(\bR\visAvailable2\xdf\x02\n" +
 	"\vCoreService\x12H\n" +
 	"\vGetServices\x12\x1b.core.v1.GetServicesRequest\x1a\x1c.core.v1.GetServicesResponse\x12E\n" +
 	"\n" +
-	"GetService\x12\x1a.core.v1.GetServiceRequest\x1a\x1b.core.v1.GetServiceResponse\x12]\n" +
-	"\x12CheckServiceActive\x12\".core.v1.CheckServiceActiveRequest\x1a#.core.v1.CheckServiceActiveResponseB;Z9github.com/mandacode-com/seregeti-proto/go/core/v1;corev1b\x06proto3"
+	"GetService\x12\x1a.core.v1.GetServiceRequest\x1a\x1b.core.v1.GetServiceResponse\x12Z\n" +
+	"\x0fIsActiveService\x12\".core.v1.GetIsActiveServiceRequest\x1a#.core.v1.GetIsActiveServiceResponse\x12c\n" +
+	"\x12IsAvailableService\x12%.core.v1.GetIsAvailableServiceRequest\x1a&.core.v1.GetIsAvailableServiceResponseB;Z9github.com/mandacode-com/seregeti-proto/go/core/v1;corev1b\x06proto3"
 
 var (
 	file_core_v1_core_proto_rawDescOnce sync.Once
@@ -414,27 +500,31 @@ func file_core_v1_core_proto_rawDescGZIP() []byte {
 	return file_core_v1_core_proto_rawDescData
 }
 
-var file_core_v1_core_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
+var file_core_v1_core_proto_msgTypes = make([]protoimpl.MessageInfo, 9)
 var file_core_v1_core_proto_goTypes = []any{
-	(*Service)(nil),                    // 0: core.v1.Service
-	(*GetServicesRequest)(nil),         // 1: core.v1.GetServicesRequest
-	(*GetServicesResponse)(nil),        // 2: core.v1.GetServicesResponse
-	(*GetServiceRequest)(nil),          // 3: core.v1.GetServiceRequest
-	(*GetServiceResponse)(nil),         // 4: core.v1.GetServiceResponse
-	(*CheckServiceActiveRequest)(nil),  // 5: core.v1.CheckServiceActiveRequest
-	(*CheckServiceActiveResponse)(nil), // 6: core.v1.CheckServiceActiveResponse
+	(*Service)(nil),                       // 0: core.v1.Service
+	(*GetServicesRequest)(nil),            // 1: core.v1.GetServicesRequest
+	(*GetServicesResponse)(nil),           // 2: core.v1.GetServicesResponse
+	(*GetServiceRequest)(nil),             // 3: core.v1.GetServiceRequest
+	(*GetServiceResponse)(nil),            // 4: core.v1.GetServiceResponse
+	(*GetIsActiveServiceRequest)(nil),     // 5: core.v1.GetIsActiveServiceRequest
+	(*GetIsActiveServiceResponse)(nil),    // 6: core.v1.GetIsActiveServiceResponse
+	(*GetIsAvailableServiceRequest)(nil),  // 7: core.v1.GetIsAvailableServiceRequest
+	(*GetIsAvailableServiceResponse)(nil), // 8: core.v1.GetIsAvailableServiceResponse
 }
 var file_core_v1_core_proto_depIdxs = []int32{
 	0, // 0: core.v1.GetServicesResponse.services:type_name -> core.v1.Service
 	0, // 1: core.v1.GetServiceResponse.service:type_name -> core.v1.Service
 	1, // 2: core.v1.CoreService.GetServices:input_type -> core.v1.GetServicesRequest
 	3, // 3: core.v1.CoreService.GetService:input_type -> core.v1.GetServiceRequest
-	5, // 4: core.v1.CoreService.CheckServiceActive:input_type -> core.v1.CheckServiceActiveRequest
-	2, // 5: core.v1.CoreService.GetServices:output_type -> core.v1.GetServicesResponse
-	4, // 6: core.v1.CoreService.GetService:output_type -> core.v1.GetServiceResponse
-	6, // 7: core.v1.CoreService.CheckServiceActive:output_type -> core.v1.CheckServiceActiveResponse
-	5, // [5:8] is the sub-list for method output_type
-	2, // [2:5] is the sub-list for method input_type
+	5, // 4: core.v1.CoreService.IsActiveService:input_type -> core.v1.GetIsActiveServiceRequest
+	7, // 5: core.v1.CoreService.IsAvailableService:input_type -> core.v1.GetIsAvailableServiceRequest
+	2, // 6: core.v1.CoreService.GetServices:output_type -> core.v1.GetServicesResponse
+	4, // 7: core.v1.CoreService.GetService:output_type -> core.v1.GetServiceResponse
+	6, // 8: core.v1.CoreService.IsActiveService:output_type -> core.v1.GetIsActiveServiceResponse
+	8, // 9: core.v1.CoreService.IsAvailableService:output_type -> core.v1.GetIsAvailableServiceResponse
+	6, // [6:10] is the sub-list for method output_type
+	2, // [2:6] is the sub-list for method input_type
 	2, // [2:2] is the sub-list for extension type_name
 	2, // [2:2] is the sub-list for extension extendee
 	0, // [0:2] is the sub-list for field type_name
@@ -445,13 +535,14 @@ func file_core_v1_core_proto_init() {
 	if File_core_v1_core_proto != nil {
 		return
 	}
+	file_core_v1_core_proto_msgTypes[4].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_core_v1_core_proto_rawDesc), len(file_core_v1_core_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   7,
+			NumMessages:   9,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
