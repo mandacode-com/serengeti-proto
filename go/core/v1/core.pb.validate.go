@@ -450,22 +450,22 @@ var _ interface {
 	ErrorName() string
 } = GetServiceResponseValidationError{}
 
-// Validate checks the field values on GetIsActiveServiceRequest with the rules
+// Validate checks the field values on IsActiveServiceRequest with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, the first error encountered is returned, or nil if there are no violations.
-func (m *GetIsActiveServiceRequest) Validate() error {
+func (m *IsActiveServiceRequest) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on GetIsActiveServiceRequest with the
-// rules defined in the proto definition for this message. If any rules are
+// ValidateAll checks the field values on IsActiveServiceRequest with the rules
+// defined in the proto definition for this message. If any rules are
 // violated, the result is a list of violation errors wrapped in
-// GetIsActiveServiceRequestMultiError, or nil if none found.
-func (m *GetIsActiveServiceRequest) ValidateAll() error {
+// IsActiveServiceRequestMultiError, or nil if none found.
+func (m *IsActiveServiceRequest) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *GetIsActiveServiceRequest) validate(all bool) error {
+func (m *IsActiveServiceRequest) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -473,7 +473,7 @@ func (m *GetIsActiveServiceRequest) validate(all bool) error {
 	var errors []error
 
 	if err := m._validateUuid(m.GetId()); err != nil {
-		err = GetIsActiveServiceRequestValidationError{
+		err = IsActiveServiceRequestValidationError{
 			field:  "Id",
 			reason: "value must be a valid UUID",
 			cause:  err,
@@ -485,13 +485,13 @@ func (m *GetIsActiveServiceRequest) validate(all bool) error {
 	}
 
 	if len(errors) > 0 {
-		return GetIsActiveServiceRequestMultiError(errors)
+		return IsActiveServiceRequestMultiError(errors)
 	}
 
 	return nil
 }
 
-func (m *GetIsActiveServiceRequest) _validateUuid(uuid string) error {
+func (m *IsActiveServiceRequest) _validateUuid(uuid string) error {
 	if matched := _core_uuidPattern.MatchString(uuid); !matched {
 		return errors.New("invalid uuid format")
 	}
@@ -499,13 +499,13 @@ func (m *GetIsActiveServiceRequest) _validateUuid(uuid string) error {
 	return nil
 }
 
-// GetIsActiveServiceRequestMultiError is an error wrapping multiple validation
-// errors returned by GetIsActiveServiceRequest.ValidateAll() if the
-// designated constraints aren't met.
-type GetIsActiveServiceRequestMultiError []error
+// IsActiveServiceRequestMultiError is an error wrapping multiple validation
+// errors returned by IsActiveServiceRequest.ValidateAll() if the designated
+// constraints aren't met.
+type IsActiveServiceRequestMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m GetIsActiveServiceRequestMultiError) Error() string {
+func (m IsActiveServiceRequestMultiError) Error() string {
 	msgs := make([]string, 0, len(m))
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -514,11 +514,11 @@ func (m GetIsActiveServiceRequestMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m GetIsActiveServiceRequestMultiError) AllErrors() []error { return m }
+func (m IsActiveServiceRequestMultiError) AllErrors() []error { return m }
 
-// GetIsActiveServiceRequestValidationError is the validation error returned by
-// GetIsActiveServiceRequest.Validate if the designated constraints aren't met.
-type GetIsActiveServiceRequestValidationError struct {
+// IsActiveServiceRequestValidationError is the validation error returned by
+// IsActiveServiceRequest.Validate if the designated constraints aren't met.
+type IsActiveServiceRequestValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -526,24 +526,24 @@ type GetIsActiveServiceRequestValidationError struct {
 }
 
 // Field function returns field value.
-func (e GetIsActiveServiceRequestValidationError) Field() string { return e.field }
+func (e IsActiveServiceRequestValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e GetIsActiveServiceRequestValidationError) Reason() string { return e.reason }
+func (e IsActiveServiceRequestValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e GetIsActiveServiceRequestValidationError) Cause() error { return e.cause }
+func (e IsActiveServiceRequestValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e GetIsActiveServiceRequestValidationError) Key() bool { return e.key }
+func (e IsActiveServiceRequestValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e GetIsActiveServiceRequestValidationError) ErrorName() string {
-	return "GetIsActiveServiceRequestValidationError"
+func (e IsActiveServiceRequestValidationError) ErrorName() string {
+	return "IsActiveServiceRequestValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e GetIsActiveServiceRequestValidationError) Error() string {
+func (e IsActiveServiceRequestValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -555,14 +555,14 @@ func (e GetIsActiveServiceRequestValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sGetIsActiveServiceRequest.%s: %s%s",
+		"invalid %sIsActiveServiceRequest.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = GetIsActiveServiceRequestValidationError{}
+var _ error = IsActiveServiceRequestValidationError{}
 
 var _ interface {
 	Field() string
@@ -570,24 +570,24 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = GetIsActiveServiceRequestValidationError{}
+} = IsActiveServiceRequestValidationError{}
 
-// Validate checks the field values on GetIsActiveServiceResponse with the
-// rules defined in the proto definition for this message. If any rules are
+// Validate checks the field values on IsActiveServiceResponse with the rules
+// defined in the proto definition for this message. If any rules are
 // violated, the first error encountered is returned, or nil if there are no violations.
-func (m *GetIsActiveServiceResponse) Validate() error {
+func (m *IsActiveServiceResponse) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on GetIsActiveServiceResponse with the
+// ValidateAll checks the field values on IsActiveServiceResponse with the
 // rules defined in the proto definition for this message. If any rules are
 // violated, the result is a list of violation errors wrapped in
-// GetIsActiveServiceResponseMultiError, or nil if none found.
-func (m *GetIsActiveServiceResponse) ValidateAll() error {
+// IsActiveServiceResponseMultiError, or nil if none found.
+func (m *IsActiveServiceResponse) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *GetIsActiveServiceResponse) validate(all bool) error {
+func (m *IsActiveServiceResponse) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -597,19 +597,19 @@ func (m *GetIsActiveServiceResponse) validate(all bool) error {
 	// no validation rules for IsActive
 
 	if len(errors) > 0 {
-		return GetIsActiveServiceResponseMultiError(errors)
+		return IsActiveServiceResponseMultiError(errors)
 	}
 
 	return nil
 }
 
-// GetIsActiveServiceResponseMultiError is an error wrapping multiple
-// validation errors returned by GetIsActiveServiceResponse.ValidateAll() if
-// the designated constraints aren't met.
-type GetIsActiveServiceResponseMultiError []error
+// IsActiveServiceResponseMultiError is an error wrapping multiple validation
+// errors returned by IsActiveServiceResponse.ValidateAll() if the designated
+// constraints aren't met.
+type IsActiveServiceResponseMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m GetIsActiveServiceResponseMultiError) Error() string {
+func (m IsActiveServiceResponseMultiError) Error() string {
 	msgs := make([]string, 0, len(m))
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -618,11 +618,11 @@ func (m GetIsActiveServiceResponseMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m GetIsActiveServiceResponseMultiError) AllErrors() []error { return m }
+func (m IsActiveServiceResponseMultiError) AllErrors() []error { return m }
 
-// GetIsActiveServiceResponseValidationError is the validation error returned
-// by GetIsActiveServiceResponse.Validate if the designated constraints aren't met.
-type GetIsActiveServiceResponseValidationError struct {
+// IsActiveServiceResponseValidationError is the validation error returned by
+// IsActiveServiceResponse.Validate if the designated constraints aren't met.
+type IsActiveServiceResponseValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -630,24 +630,24 @@ type GetIsActiveServiceResponseValidationError struct {
 }
 
 // Field function returns field value.
-func (e GetIsActiveServiceResponseValidationError) Field() string { return e.field }
+func (e IsActiveServiceResponseValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e GetIsActiveServiceResponseValidationError) Reason() string { return e.reason }
+func (e IsActiveServiceResponseValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e GetIsActiveServiceResponseValidationError) Cause() error { return e.cause }
+func (e IsActiveServiceResponseValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e GetIsActiveServiceResponseValidationError) Key() bool { return e.key }
+func (e IsActiveServiceResponseValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e GetIsActiveServiceResponseValidationError) ErrorName() string {
-	return "GetIsActiveServiceResponseValidationError"
+func (e IsActiveServiceResponseValidationError) ErrorName() string {
+	return "IsActiveServiceResponseValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e GetIsActiveServiceResponseValidationError) Error() string {
+func (e IsActiveServiceResponseValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -659,14 +659,14 @@ func (e GetIsActiveServiceResponseValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sGetIsActiveServiceResponse.%s: %s%s",
+		"invalid %sIsActiveServiceResponse.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = GetIsActiveServiceResponseValidationError{}
+var _ error = IsActiveServiceResponseValidationError{}
 
 var _ interface {
 	Field() string
@@ -674,24 +674,24 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = GetIsActiveServiceResponseValidationError{}
+} = IsActiveServiceResponseValidationError{}
 
-// Validate checks the field values on GetIsAvailableServiceRequest with the
-// rules defined in the proto definition for this message. If any rules are
+// Validate checks the field values on IsAvailableServiceRequest with the rules
+// defined in the proto definition for this message. If any rules are
 // violated, the first error encountered is returned, or nil if there are no violations.
-func (m *GetIsAvailableServiceRequest) Validate() error {
+func (m *IsAvailableServiceRequest) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on GetIsAvailableServiceRequest with the
+// ValidateAll checks the field values on IsAvailableServiceRequest with the
 // rules defined in the proto definition for this message. If any rules are
 // violated, the result is a list of violation errors wrapped in
-// GetIsAvailableServiceRequestMultiError, or nil if none found.
-func (m *GetIsAvailableServiceRequest) ValidateAll() error {
+// IsAvailableServiceRequestMultiError, or nil if none found.
+func (m *IsAvailableServiceRequest) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *GetIsAvailableServiceRequest) validate(all bool) error {
+func (m *IsAvailableServiceRequest) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -699,7 +699,7 @@ func (m *GetIsAvailableServiceRequest) validate(all bool) error {
 	var errors []error
 
 	if err := m._validateUuid(m.GetId()); err != nil {
-		err = GetIsAvailableServiceRequestValidationError{
+		err = IsAvailableServiceRequestValidationError{
 			field:  "Id",
 			reason: "value must be a valid UUID",
 			cause:  err,
@@ -711,13 +711,13 @@ func (m *GetIsAvailableServiceRequest) validate(all bool) error {
 	}
 
 	if len(errors) > 0 {
-		return GetIsAvailableServiceRequestMultiError(errors)
+		return IsAvailableServiceRequestMultiError(errors)
 	}
 
 	return nil
 }
 
-func (m *GetIsAvailableServiceRequest) _validateUuid(uuid string) error {
+func (m *IsAvailableServiceRequest) _validateUuid(uuid string) error {
 	if matched := _core_uuidPattern.MatchString(uuid); !matched {
 		return errors.New("invalid uuid format")
 	}
@@ -725,13 +725,13 @@ func (m *GetIsAvailableServiceRequest) _validateUuid(uuid string) error {
 	return nil
 }
 
-// GetIsAvailableServiceRequestMultiError is an error wrapping multiple
-// validation errors returned by GetIsAvailableServiceRequest.ValidateAll() if
-// the designated constraints aren't met.
-type GetIsAvailableServiceRequestMultiError []error
+// IsAvailableServiceRequestMultiError is an error wrapping multiple validation
+// errors returned by IsAvailableServiceRequest.ValidateAll() if the
+// designated constraints aren't met.
+type IsAvailableServiceRequestMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m GetIsAvailableServiceRequestMultiError) Error() string {
+func (m IsAvailableServiceRequestMultiError) Error() string {
 	msgs := make([]string, 0, len(m))
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -740,12 +740,11 @@ func (m GetIsAvailableServiceRequestMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m GetIsAvailableServiceRequestMultiError) AllErrors() []error { return m }
+func (m IsAvailableServiceRequestMultiError) AllErrors() []error { return m }
 
-// GetIsAvailableServiceRequestValidationError is the validation error returned
-// by GetIsAvailableServiceRequest.Validate if the designated constraints
-// aren't met.
-type GetIsAvailableServiceRequestValidationError struct {
+// IsAvailableServiceRequestValidationError is the validation error returned by
+// IsAvailableServiceRequest.Validate if the designated constraints aren't met.
+type IsAvailableServiceRequestValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -753,24 +752,24 @@ type GetIsAvailableServiceRequestValidationError struct {
 }
 
 // Field function returns field value.
-func (e GetIsAvailableServiceRequestValidationError) Field() string { return e.field }
+func (e IsAvailableServiceRequestValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e GetIsAvailableServiceRequestValidationError) Reason() string { return e.reason }
+func (e IsAvailableServiceRequestValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e GetIsAvailableServiceRequestValidationError) Cause() error { return e.cause }
+func (e IsAvailableServiceRequestValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e GetIsAvailableServiceRequestValidationError) Key() bool { return e.key }
+func (e IsAvailableServiceRequestValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e GetIsAvailableServiceRequestValidationError) ErrorName() string {
-	return "GetIsAvailableServiceRequestValidationError"
+func (e IsAvailableServiceRequestValidationError) ErrorName() string {
+	return "IsAvailableServiceRequestValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e GetIsAvailableServiceRequestValidationError) Error() string {
+func (e IsAvailableServiceRequestValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -782,14 +781,14 @@ func (e GetIsAvailableServiceRequestValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sGetIsAvailableServiceRequest.%s: %s%s",
+		"invalid %sIsAvailableServiceRequest.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = GetIsAvailableServiceRequestValidationError{}
+var _ error = IsAvailableServiceRequestValidationError{}
 
 var _ interface {
 	Field() string
@@ -797,24 +796,24 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = GetIsAvailableServiceRequestValidationError{}
+} = IsAvailableServiceRequestValidationError{}
 
-// Validate checks the field values on GetIsAvailableServiceResponse with the
+// Validate checks the field values on IsAvailableServiceResponse with the
 // rules defined in the proto definition for this message. If any rules are
 // violated, the first error encountered is returned, or nil if there are no violations.
-func (m *GetIsAvailableServiceResponse) Validate() error {
+func (m *IsAvailableServiceResponse) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on GetIsAvailableServiceResponse with
-// the rules defined in the proto definition for this message. If any rules
-// are violated, the result is a list of violation errors wrapped in
-// GetIsAvailableServiceResponseMultiError, or nil if none found.
-func (m *GetIsAvailableServiceResponse) ValidateAll() error {
+// ValidateAll checks the field values on IsAvailableServiceResponse with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// IsAvailableServiceResponseMultiError, or nil if none found.
+func (m *IsAvailableServiceResponse) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *GetIsAvailableServiceResponse) validate(all bool) error {
+func (m *IsAvailableServiceResponse) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -824,19 +823,19 @@ func (m *GetIsAvailableServiceResponse) validate(all bool) error {
 	// no validation rules for IsAvailable
 
 	if len(errors) > 0 {
-		return GetIsAvailableServiceResponseMultiError(errors)
+		return IsAvailableServiceResponseMultiError(errors)
 	}
 
 	return nil
 }
 
-// GetIsAvailableServiceResponseMultiError is an error wrapping multiple
-// validation errors returned by GetIsAvailableServiceResponse.ValidateAll()
-// if the designated constraints aren't met.
-type GetIsAvailableServiceResponseMultiError []error
+// IsAvailableServiceResponseMultiError is an error wrapping multiple
+// validation errors returned by IsAvailableServiceResponse.ValidateAll() if
+// the designated constraints aren't met.
+type IsAvailableServiceResponseMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m GetIsAvailableServiceResponseMultiError) Error() string {
+func (m IsAvailableServiceResponseMultiError) Error() string {
 	msgs := make([]string, 0, len(m))
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -845,12 +844,11 @@ func (m GetIsAvailableServiceResponseMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m GetIsAvailableServiceResponseMultiError) AllErrors() []error { return m }
+func (m IsAvailableServiceResponseMultiError) AllErrors() []error { return m }
 
-// GetIsAvailableServiceResponseValidationError is the validation error
-// returned by GetIsAvailableServiceResponse.Validate if the designated
-// constraints aren't met.
-type GetIsAvailableServiceResponseValidationError struct {
+// IsAvailableServiceResponseValidationError is the validation error returned
+// by IsAvailableServiceResponse.Validate if the designated constraints aren't met.
+type IsAvailableServiceResponseValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -858,24 +856,24 @@ type GetIsAvailableServiceResponseValidationError struct {
 }
 
 // Field function returns field value.
-func (e GetIsAvailableServiceResponseValidationError) Field() string { return e.field }
+func (e IsAvailableServiceResponseValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e GetIsAvailableServiceResponseValidationError) Reason() string { return e.reason }
+func (e IsAvailableServiceResponseValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e GetIsAvailableServiceResponseValidationError) Cause() error { return e.cause }
+func (e IsAvailableServiceResponseValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e GetIsAvailableServiceResponseValidationError) Key() bool { return e.key }
+func (e IsAvailableServiceResponseValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e GetIsAvailableServiceResponseValidationError) ErrorName() string {
-	return "GetIsAvailableServiceResponseValidationError"
+func (e IsAvailableServiceResponseValidationError) ErrorName() string {
+	return "IsAvailableServiceResponseValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e GetIsAvailableServiceResponseValidationError) Error() string {
+func (e IsAvailableServiceResponseValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -887,14 +885,14 @@ func (e GetIsAvailableServiceResponseValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sGetIsAvailableServiceResponse.%s: %s%s",
+		"invalid %sIsAvailableServiceResponse.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = GetIsAvailableServiceResponseValidationError{}
+var _ error = IsAvailableServiceResponseValidationError{}
 
 var _ interface {
 	Field() string
@@ -902,4 +900,4 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = GetIsAvailableServiceResponseValidationError{}
+} = IsAvailableServiceResponseValidationError{}
