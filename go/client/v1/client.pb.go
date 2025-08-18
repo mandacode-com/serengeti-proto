@@ -236,7 +236,7 @@ func (x *CreateClientRequest) GetRedirectUris() []string {
 type CreateClientResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Client        *Client                `protobuf:"bytes,1,opt,name=client,proto3" json:"client,omitempty"`                                 // Created client
-	ClientSecret  string                 `protobuf:"bytes,2,opt,name=client_secret,json=clientSecret,proto3" json:"client_secret,omitempty"` // Secret for the client
+	ClientSecret  []byte                 `protobuf:"bytes,2,opt,name=client_secret,json=clientSecret,proto3" json:"client_secret,omitempty"` // Secret for the client, using bytes for flexibility
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -278,11 +278,11 @@ func (x *CreateClientResponse) GetClient() *Client {
 	return nil
 }
 
-func (x *CreateClientResponse) GetClientSecret() string {
+func (x *CreateClientResponse) GetClientSecret() []byte {
 	if x != nil {
 		return x.ClientSecret
 	}
-	return ""
+	return nil
 }
 
 type ListClientsRequest struct {
@@ -507,7 +507,7 @@ func (x *RotateClientSecretRequest) GetId() string {
 
 type RotateClientSecretResponse struct {
 	state           protoimpl.MessageState `protogen:"open.v1"`
-	NewClientSecret string                 `protobuf:"bytes,1,opt,name=new_client_secret,json=newClientSecret,proto3" json:"new_client_secret,omitempty"` // New secret for the client
+	NewClientSecret []byte                 `protobuf:"bytes,1,opt,name=new_client_secret,json=newClientSecret,proto3" json:"new_client_secret,omitempty"` // New secret for the client, using bytes for flexibility
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
@@ -542,11 +542,11 @@ func (*RotateClientSecretResponse) Descriptor() ([]byte, []int) {
 	return file_client_v1_client_proto_rawDescGZIP(), []int{8}
 }
 
-func (x *RotateClientSecretResponse) GetNewClientSecret() string {
+func (x *RotateClientSecretResponse) GetNewClientSecret() []byte {
 	if x != nil {
 		return x.NewClientSecret
 	}
-	return ""
+	return nil
 }
 
 type UpdateRedirectUrisRequest struct {
@@ -649,7 +649,7 @@ type VerifyClientRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	ServiceId     string                 `protobuf:"bytes,1,opt,name=service_id,json=serviceId,proto3" json:"service_id,omitempty"`          // Unique identifier for the service
 	ClientId      string                 `protobuf:"bytes,2,opt,name=client_id,json=clientId,proto3" json:"client_id,omitempty"`             // Unique identifier for the client
-	ClientSecret  string                 `protobuf:"bytes,3,opt,name=client_secret,json=clientSecret,proto3" json:"client_secret,omitempty"` // Secret for the client
+	ClientSecret  []byte                 `protobuf:"bytes,3,opt,name=client_secret,json=clientSecret,proto3" json:"client_secret,omitempty"` // Secret for the client, using bytes for flexibility
 	RedirectUri   string                 `protobuf:"bytes,4,opt,name=redirect_uri,json=redirectUri,proto3" json:"redirect_uri,omitempty"`    // Redirect URI for the client
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -699,11 +699,11 @@ func (x *VerifyClientRequest) GetClientId() string {
 	return ""
 }
 
-func (x *VerifyClientRequest) GetClientSecret() string {
+func (x *VerifyClientRequest) GetClientSecret() []byte {
 	if x != nil {
 		return x.ClientSecret
 	}
-	return ""
+	return nil
 }
 
 func (x *VerifyClientRequest) GetRedirectUri() string {
@@ -783,7 +783,7 @@ const file_client_v1_client_proto_rawDesc = "" +
 	"\rredirect_uris\x18\x03 \x03(\tB\x11\xfaB\x0e\x92\x01\v\b\x01\x18\x01\"\x05r\x03\x88\x01\x01R\fredirectUris\"o\n" +
 	"\x14CreateClientResponse\x12)\n" +
 	"\x06client\x18\x01 \x01(\v2\x11.client.v1.ClientR\x06client\x12,\n" +
-	"\rclient_secret\x18\x02 \x01(\tB\a\xfaB\x04r\x02\x10\x01R\fclientSecret\"=\n" +
+	"\rclient_secret\x18\x02 \x01(\fB\a\xfaB\x04z\x02\x10\x01R\fclientSecret\"=\n" +
 	"\x12ListClientsRequest\x12'\n" +
 	"\n" +
 	"service_id\x18\x01 \x01(\tB\b\xfaB\x05r\x03\xb0\x01\x01R\tserviceId\"B\n" +
@@ -796,7 +796,7 @@ const file_client_v1_client_proto_rawDesc = "" +
 	"\x19RotateClientSecretRequest\x12\x18\n" +
 	"\x02id\x18\x01 \x01(\tB\b\xfaB\x05r\x03\xb0\x01\x01R\x02id\"Q\n" +
 	"\x1aRotateClientSecretResponse\x123\n" +
-	"\x11new_client_secret\x18\x01 \x01(\tB\a\xfaB\x04r\x02\x10\x01R\x0fnewClientSecret\"m\n" +
+	"\x11new_client_secret\x18\x01 \x01(\fB\a\xfaB\x04z\x02\x10\x01R\x0fnewClientSecret\"m\n" +
 	"\x19UpdateRedirectUrisRequest\x12\x18\n" +
 	"\x02id\x18\x01 \x01(\tB\b\xfaB\x05r\x03\xb0\x01\x01R\x02id\x126\n" +
 	"\rredirect_uris\x18\x02 \x03(\tB\x11\xfaB\x0e\x92\x01\v\b\x01\x18\x01\"\x05r\x03\x88\x01\x01R\fredirectUris\"G\n" +
@@ -806,7 +806,7 @@ const file_client_v1_client_proto_rawDesc = "" +
 	"\n" +
 	"service_id\x18\x01 \x01(\tB\b\xfaB\x05r\x03\xb0\x01\x01R\tserviceId\x12$\n" +
 	"\tclient_id\x18\x02 \x01(\tB\a\xfaB\x04r\x02\x10\x01R\bclientId\x12,\n" +
-	"\rclient_secret\x18\x03 \x01(\tB\a\xfaB\x04r\x02\x10\x01R\fclientSecret\x12+\n" +
+	"\rclient_secret\x18\x03 \x01(\fB\a\xfaB\x04z\x02\x10\x01R\fclientSecret\x12+\n" +
 	"\fredirect_uri\x18\x04 \x01(\tB\b\xfaB\x05r\x03\x88\x01\x01R\vredirectUri\"2\n" +
 	"\x14VerifyClientResponse\x12\x1a\n" +
 	"\bverified\x18\x01 \x01(\bR\bverified*c\n" +

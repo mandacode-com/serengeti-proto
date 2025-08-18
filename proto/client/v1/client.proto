@@ -55,7 +55,7 @@ message CreateClientRequest {
 
 message CreateClientResponse {
   Client client = 1; // Created client
-  string client_secret = 2 [(validate.rules).string = {min_len: 1}]; // Secret for the client
+  bytes client_secret = 2 [(validate.rules).bytes = {min_len: 1}]; // Secret for the client, using bytes for flexibility
 }
 
 message ListClientsRequest {
@@ -79,7 +79,7 @@ message RotateClientSecretRequest {
 }
 
 message RotateClientSecretResponse {
-  string new_client_secret = 1 [(validate.rules).string = {min_len: 1}]; // New secret for the client
+  bytes new_client_secret = 1 [(validate.rules).bytes = {min_len: 1}]; // New secret for the client, using bytes for flexibility
 }
 
 message UpdateRedirectUrisRequest {
@@ -100,7 +100,7 @@ message UpdateRedirectUrisResponse {
 message VerifyClientRequest {
   string service_id = 1 [(validate.rules).string = {uuid: true}]; // Unique identifier for the service
   string client_id = 2 [(validate.rules).string = {min_len: 1}]; // Unique identifier for the client
-  string client_secret = 3 [(validate.rules).string = {min_len: 1}]; // Secret for the client
+  bytes client_secret = 3 [(validate.rules).bytes = {min_len: 1}]; // Secret for the client, using bytes for flexibility
   string redirect_uri = 4 [(validate.rules).string = {uri: true}]; // Redirect URI for the client
 }
 

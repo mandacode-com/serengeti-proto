@@ -538,10 +538,10 @@ func (m *CreateClientResponse) validate(all bool) error {
 		}
 	}
 
-	if utf8.RuneCountInString(m.GetClientSecret()) < 1 {
+	if len(m.GetClientSecret()) < 1 {
 		err := CreateClientResponseValidationError{
 			field:  "ClientSecret",
-			reason: "value length must be at least 1 runes",
+			reason: "value length must be at least 1 bytes",
 		}
 		if !all {
 			return err
@@ -1257,10 +1257,10 @@ func (m *RotateClientSecretResponse) validate(all bool) error {
 
 	var errors []error
 
-	if utf8.RuneCountInString(m.GetNewClientSecret()) < 1 {
+	if len(m.GetNewClientSecret()) < 1 {
 		err := RotateClientSecretResponseValidationError{
 			field:  "NewClientSecret",
-			reason: "value length must be at least 1 runes",
+			reason: "value length must be at least 1 bytes",
 		}
 		if !all {
 			return err
@@ -1698,10 +1698,10 @@ func (m *VerifyClientRequest) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if utf8.RuneCountInString(m.GetClientSecret()) < 1 {
+	if len(m.GetClientSecret()) < 1 {
 		err := VerifyClientRequestValidationError{
 			field:  "ClientSecret",
-			reason: "value length must be at least 1 runes",
+			reason: "value length must be at least 1 bytes",
 		}
 		if !all {
 			return err
