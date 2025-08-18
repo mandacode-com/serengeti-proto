@@ -75,12 +75,13 @@ func (ClientStatus) EnumDescriptor() ([]byte, []int) {
 
 type Client struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	ServiceId     string                 `protobuf:"bytes,1,opt,name=service_id,json=serviceId,proto3" json:"service_id,omitempty"`    // Unique identifier for the service
-	ClientId      string                 `protobuf:"bytes,2,opt,name=client_id,json=clientId,proto3" json:"client_id,omitempty"`       // Unique identifier for the client
-	ClientName    string                 `protobuf:"bytes,3,opt,name=client_name,json=clientName,proto3" json:"client_name,omitempty"` // Name of the client
-	CreatedAt     *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
-	UpdatedAt     *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
-	Status        ClientStatus           `protobuf:"varint,6,opt,name=status,proto3,enum=client.v1.ClientStatus" json:"status,omitempty"` // Status of the client
+	ServiceId     string                 `protobuf:"bytes,1,opt,name=service_id,json=serviceId,proto3" json:"service_id,omitempty"`          // Unique identifier for the service
+	ClientId      string                 `protobuf:"bytes,2,opt,name=client_id,json=clientId,proto3" json:"client_id,omitempty"`             // Unique identifier for the client
+	ClientName    string                 `protobuf:"bytes,3,opt,name=client_name,json=clientName,proto3" json:"client_name,omitempty"`       // Name of the client
+	RedirectUris  []string               `protobuf:"bytes,4,rep,name=redirect_uris,json=redirectUris,proto3" json:"redirect_uris,omitempty"` // List of redirect URIs for the client
+	CreatedAt     *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	UpdatedAt     *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
+	Status        ClientStatus           `protobuf:"varint,7,opt,name=status,proto3,enum=client.v1.ClientStatus" json:"status,omitempty"` // Status of the client
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -134,6 +135,13 @@ func (x *Client) GetClientName() string {
 		return x.ClientName
 	}
 	return ""
+}
+
+func (x *Client) GetRedirectUris() []string {
+	if x != nil {
+		return x.RedirectUris
+	}
+	return nil
 }
 
 func (x *Client) GetCreatedAt() *timestamppb.Timestamp {
@@ -554,6 +562,7 @@ type VerifyClientRequest struct {
 	ServiceId     string                 `protobuf:"bytes,1,opt,name=service_id,json=serviceId,proto3" json:"service_id,omitempty"`          // Unique identifier for the service
 	ClientId      string                 `protobuf:"bytes,2,opt,name=client_id,json=clientId,proto3" json:"client_id,omitempty"`             // Unique identifier for the client
 	ClientSecret  string                 `protobuf:"bytes,3,opt,name=client_secret,json=clientSecret,proto3" json:"client_secret,omitempty"` // Secret for the client
+	RedirectUri   string                 `protobuf:"bytes,4,opt,name=redirect_uri,json=redirectUri,proto3" json:"redirect_uri,omitempty"`    // Redirect URI for the client
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -609,6 +618,13 @@ func (x *VerifyClientRequest) GetClientSecret() string {
 	return ""
 }
 
+func (x *VerifyClientRequest) GetRedirectUri() string {
+	if x != nil {
+		return x.RedirectUri
+	}
+	return ""
+}
+
 type VerifyClientResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Verified      bool                   `protobuf:"varint,1,opt,name=verified,proto3" json:"verified,omitempty"` // Indicates if the client was successfully verified
@@ -657,18 +673,19 @@ var File_client_v1_client_proto protoreflect.FileDescriptor
 
 const file_client_v1_client_proto_rawDesc = "" +
 	"\n" +
-	"\x16client/v1/client.proto\x12\tclient.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a#third_party/validate/validate.proto\"\xa8\x02\n" +
+	"\x16client/v1/client.proto\x12\tclient.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a#third_party/validate/validate.proto\"\xe0\x02\n" +
 	"\x06Client\x12'\n" +
 	"\n" +
 	"service_id\x18\x01 \x01(\tB\b\xfaB\x05r\x03\xb0\x01\x01R\tserviceId\x12$\n" +
 	"\tclient_id\x18\x02 \x01(\tB\a\xfaB\x04r\x02\x10\x01R\bclientId\x12(\n" +
 	"\vclient_name\x18\x03 \x01(\tB\a\xfaB\x04r\x02\x10\x01R\n" +
-	"clientName\x129\n" +
+	"clientName\x126\n" +
+	"\rredirect_uris\x18\x04 \x03(\tB\x11\xfaB\x0e\x92\x01\v\b\x01\x18\x01\"\x05r\x03\x88\x01\x01R\fredirectUris\x129\n" +
 	"\n" +
-	"created_at\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x129\n" +
+	"created_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x129\n" +
 	"\n" +
-	"updated_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAt\x12/\n" +
-	"\x06status\x18\x06 \x01(\x0e2\x17.client.v1.ClientStatusR\x06status\"h\n" +
+	"updated_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAt\x12/\n" +
+	"\x06status\x18\a \x01(\x0e2\x17.client.v1.ClientStatusR\x06status\"h\n" +
 	"\x13CreateClientRequest\x12'\n" +
 	"\n" +
 	"service_id\x18\x01 \x01(\tB\b\xfaB\x05r\x03\xb0\x01\x01R\tserviceId\x12(\n" +
@@ -694,12 +711,13 @@ const file_client_v1_client_proto_rawDesc = "" +
 	"\tclient_id\x18\x02 \x01(\tB\a\xfaB\x04r\x02\x10\x01R\bclientId\"|\n" +
 	"\x1aRotateClientSecretResponse\x12)\n" +
 	"\x06client\x18\x01 \x01(\v2\x11.client.v1.ClientR\x06client\x123\n" +
-	"\x11new_client_secret\x18\x02 \x01(\tB\a\xfaB\x04r\x02\x10\x01R\x0fnewClientSecret\"\x92\x01\n" +
+	"\x11new_client_secret\x18\x02 \x01(\tB\a\xfaB\x04r\x02\x10\x01R\x0fnewClientSecret\"\xbf\x01\n" +
 	"\x13VerifyClientRequest\x12'\n" +
 	"\n" +
 	"service_id\x18\x01 \x01(\tB\b\xfaB\x05r\x03\xb0\x01\x01R\tserviceId\x12$\n" +
 	"\tclient_id\x18\x02 \x01(\tB\a\xfaB\x04r\x02\x10\x01R\bclientId\x12,\n" +
-	"\rclient_secret\x18\x03 \x01(\tB\a\xfaB\x04r\x02\x10\x01R\fclientSecret\"2\n" +
+	"\rclient_secret\x18\x03 \x01(\tB\a\xfaB\x04r\x02\x10\x01R\fclientSecret\x12+\n" +
+	"\fredirect_uri\x18\x04 \x01(\tB\b\xfaB\x05r\x03\x88\x01\x01R\vredirectUri\"2\n" +
 	"\x14VerifyClientResponse\x12\x1a\n" +
 	"\bverified\x18\x01 \x01(\bR\bverified*c\n" +
 	"\fClientStatus\x12\x1d\n" +

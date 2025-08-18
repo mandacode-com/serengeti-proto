@@ -93,6 +93,58 @@ func (m *Client) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
+	if len(m.GetRedirectUris()) < 1 {
+		err := ClientValidationError{
+			field:  "RedirectUris",
+			reason: "value must contain at least 1 item(s)",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	_Client_RedirectUris_Unique := make(map[string]struct{}, len(m.GetRedirectUris()))
+
+	for idx, item := range m.GetRedirectUris() {
+		_, _ = idx, item
+
+		if _, exists := _Client_RedirectUris_Unique[item]; exists {
+			err := ClientValidationError{
+				field:  fmt.Sprintf("RedirectUris[%v]", idx),
+				reason: "repeated value must contain unique items",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		} else {
+			_Client_RedirectUris_Unique[item] = struct{}{}
+		}
+
+		if uri, err := url.Parse(item); err != nil {
+			err = ClientValidationError{
+				field:  fmt.Sprintf("RedirectUris[%v]", idx),
+				reason: "value must be a valid URI",
+				cause:  err,
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		} else if !uri.IsAbs() {
+			err := ClientValidationError{
+				field:  fmt.Sprintf("RedirectUris[%v]", idx),
+				reason: "value must be absolute",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+
+	}
+
 	if all {
 		switch v := interface{}(m.GetCreatedAt()).(type) {
 		case interface{ ValidateAll() error }:
@@ -1332,6 +1384,27 @@ func (m *VerifyClientRequest) validate(all bool) error {
 		err := VerifyClientRequestValidationError{
 			field:  "ClientSecret",
 			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if uri, err := url.Parse(m.GetRedirectUri()); err != nil {
+		err = VerifyClientRequestValidationError{
+			field:  "RedirectUri",
+			reason: "value must be a valid URI",
+			cause:  err,
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	} else if !uri.IsAbs() {
+		err := VerifyClientRequestValidationError{
+			field:  "RedirectUri",
+			reason: "value must be absolute",
 		}
 		if !all {
 			return err

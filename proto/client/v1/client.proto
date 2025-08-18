@@ -18,9 +18,16 @@ message Client {
   string service_id = 1 [(validate.rules).string = {uuid: true}]; // Unique identifier for the service
   string client_id = 2 [(validate.rules).string = {min_len: 1}]; // Unique identifier for the client
   string client_name = 3 [(validate.rules).string = {min_len: 1}]; // Name of the client
-  google.protobuf.Timestamp created_at = 4;
-  google.protobuf.Timestamp updated_at = 5;
-  ClientStatus status = 6; // Status of the client
+  repeated string redirect_uris = 4 [(validate.rules).repeated = {
+    min_items: 1
+    unique: true
+    items: {
+      string: {uri: true} /* Each redirect URI must be a valid URI */
+    }
+  }]; // List of redirect URIs for the client
+  google.protobuf.Timestamp created_at = 5;
+  google.protobuf.Timestamp updated_at = 6;
+  ClientStatus status = 7; // Status of the client
 }
 
 // service definitions
@@ -73,6 +80,7 @@ message VerifyClientRequest {
   string service_id = 1 [(validate.rules).string = {uuid: true}]; // Unique identifier for the service
   string client_id = 2 [(validate.rules).string = {min_len: 1}]; // Unique identifier for the client
   string client_secret = 3 [(validate.rules).string = {min_len: 1}]; // Secret for the client
+  string redirect_uri = 4 [(validate.rules).string = {uri: true}]; // Redirect URI for the client
 }
 
 message VerifyClientResponse {
