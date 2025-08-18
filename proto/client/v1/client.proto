@@ -36,12 +36,20 @@ service ClientService {
   rpc ListClients(ListClientsRequest) returns (ListClientsResponse);
   rpc DeleteClient(DeleteClientRequest) returns (DeleteClientResponse);
   rpc RotateClientSecret(RotateClientSecretRequest) returns (RotateClientSecretResponse);
+  rpc UpdateRedirectUris(UpdateRedirectUrisRequest) returns (UpdateRedirectUrisResponse);
   rpc VerifyClient(VerifyClientRequest) returns (VerifyClientResponse);
 }
 
 message CreateClientRequest {
   string service_id = 1 [(validate.rules).string = {uuid: true}]; // Unique identifier for the service
   string client_name = 2 [(validate.rules).string = {min_len: 1}]; // Name of the client
+  repeated string redirect_uris = 3 [(validate.rules).repeated = {
+    min_items: 1
+    unique: true
+    items: {
+      string: {uri: true} /* Each redirect URI must be a valid URI */
+    }
+  }]; // List of redirect URIs for the client
 }
 
 message CreateClientResponse {
@@ -74,6 +82,22 @@ message RotateClientSecretRequest {
 message RotateClientSecretResponse {
   Client client = 1; // Client with the new secret
   string new_client_secret = 2 [(validate.rules).string = {min_len: 1}]; // New secret for the client
+}
+
+message UpdateRedirectUrisRequest {
+  string service_id = 1 [(validate.rules).string = {uuid: true}]; // Unique identifier for the service
+  string client_id = 2 [(validate.rules).string = {min_len: 1}]; // Unique identifier for the client
+  repeated string redirect_uris = 3 [(validate.rules).repeated = {
+    min_items: 1
+    unique: true
+    items: {
+      string: {uri: true} /* Each redirect URI must be a valid URI */
+    }
+  }]; // Updated list of redirect URIs for the client
+}
+
+message UpdateRedirectUrisResponse {
+  Client client = 1; // Client with updated redirect URIs
 }
 
 message VerifyClientRequest {

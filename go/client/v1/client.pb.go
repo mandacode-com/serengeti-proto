@@ -167,8 +167,9 @@ func (x *Client) GetStatus() ClientStatus {
 
 type CreateClientRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	ServiceId     string                 `protobuf:"bytes,1,opt,name=service_id,json=serviceId,proto3" json:"service_id,omitempty"`    // Unique identifier for the service
-	ClientName    string                 `protobuf:"bytes,2,opt,name=client_name,json=clientName,proto3" json:"client_name,omitempty"` // Name of the client
+	ServiceId     string                 `protobuf:"bytes,1,opt,name=service_id,json=serviceId,proto3" json:"service_id,omitempty"`          // Unique identifier for the service
+	ClientName    string                 `protobuf:"bytes,2,opt,name=client_name,json=clientName,proto3" json:"client_name,omitempty"`       // Name of the client
+	RedirectUris  []string               `protobuf:"bytes,3,rep,name=redirect_uris,json=redirectUris,proto3" json:"redirect_uris,omitempty"` // List of redirect URIs for the client
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -215,6 +216,13 @@ func (x *CreateClientRequest) GetClientName() string {
 		return x.ClientName
 	}
 	return ""
+}
+
+func (x *CreateClientRequest) GetRedirectUris() []string {
+	if x != nil {
+		return x.RedirectUris
+	}
+	return nil
 }
 
 type CreateClientResponse struct {
@@ -557,6 +565,110 @@ func (x *RotateClientSecretResponse) GetNewClientSecret() string {
 	return ""
 }
 
+type UpdateRedirectUrisRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	ServiceId     string                 `protobuf:"bytes,1,opt,name=service_id,json=serviceId,proto3" json:"service_id,omitempty"`          // Unique identifier for the service
+	ClientId      string                 `protobuf:"bytes,2,opt,name=client_id,json=clientId,proto3" json:"client_id,omitempty"`             // Unique identifier for the client
+	RedirectUris  []string               `protobuf:"bytes,3,rep,name=redirect_uris,json=redirectUris,proto3" json:"redirect_uris,omitempty"` // Updated list of redirect URIs for the client
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UpdateRedirectUrisRequest) Reset() {
+	*x = UpdateRedirectUrisRequest{}
+	mi := &file_client_v1_client_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateRedirectUrisRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateRedirectUrisRequest) ProtoMessage() {}
+
+func (x *UpdateRedirectUrisRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_client_v1_client_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateRedirectUrisRequest.ProtoReflect.Descriptor instead.
+func (*UpdateRedirectUrisRequest) Descriptor() ([]byte, []int) {
+	return file_client_v1_client_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *UpdateRedirectUrisRequest) GetServiceId() string {
+	if x != nil {
+		return x.ServiceId
+	}
+	return ""
+}
+
+func (x *UpdateRedirectUrisRequest) GetClientId() string {
+	if x != nil {
+		return x.ClientId
+	}
+	return ""
+}
+
+func (x *UpdateRedirectUrisRequest) GetRedirectUris() []string {
+	if x != nil {
+		return x.RedirectUris
+	}
+	return nil
+}
+
+type UpdateRedirectUrisResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Client        *Client                `protobuf:"bytes,1,opt,name=client,proto3" json:"client,omitempty"` // Client with updated redirect URIs
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UpdateRedirectUrisResponse) Reset() {
+	*x = UpdateRedirectUrisResponse{}
+	mi := &file_client_v1_client_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateRedirectUrisResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateRedirectUrisResponse) ProtoMessage() {}
+
+func (x *UpdateRedirectUrisResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_client_v1_client_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateRedirectUrisResponse.ProtoReflect.Descriptor instead.
+func (*UpdateRedirectUrisResponse) Descriptor() ([]byte, []int) {
+	return file_client_v1_client_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *UpdateRedirectUrisResponse) GetClient() *Client {
+	if x != nil {
+		return x.Client
+	}
+	return nil
+}
+
 type VerifyClientRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	ServiceId     string                 `protobuf:"bytes,1,opt,name=service_id,json=serviceId,proto3" json:"service_id,omitempty"`          // Unique identifier for the service
@@ -569,7 +681,7 @@ type VerifyClientRequest struct {
 
 func (x *VerifyClientRequest) Reset() {
 	*x = VerifyClientRequest{}
-	mi := &file_client_v1_client_proto_msgTypes[9]
+	mi := &file_client_v1_client_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -581,7 +693,7 @@ func (x *VerifyClientRequest) String() string {
 func (*VerifyClientRequest) ProtoMessage() {}
 
 func (x *VerifyClientRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_client_v1_client_proto_msgTypes[9]
+	mi := &file_client_v1_client_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -594,7 +706,7 @@ func (x *VerifyClientRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VerifyClientRequest.ProtoReflect.Descriptor instead.
 func (*VerifyClientRequest) Descriptor() ([]byte, []int) {
-	return file_client_v1_client_proto_rawDescGZIP(), []int{9}
+	return file_client_v1_client_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *VerifyClientRequest) GetServiceId() string {
@@ -634,7 +746,7 @@ type VerifyClientResponse struct {
 
 func (x *VerifyClientResponse) Reset() {
 	*x = VerifyClientResponse{}
-	mi := &file_client_v1_client_proto_msgTypes[10]
+	mi := &file_client_v1_client_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -646,7 +758,7 @@ func (x *VerifyClientResponse) String() string {
 func (*VerifyClientResponse) ProtoMessage() {}
 
 func (x *VerifyClientResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_client_v1_client_proto_msgTypes[10]
+	mi := &file_client_v1_client_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -659,7 +771,7 @@ func (x *VerifyClientResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VerifyClientResponse.ProtoReflect.Descriptor instead.
 func (*VerifyClientResponse) Descriptor() ([]byte, []int) {
-	return file_client_v1_client_proto_rawDescGZIP(), []int{10}
+	return file_client_v1_client_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *VerifyClientResponse) GetVerified() bool {
@@ -685,12 +797,13 @@ const file_client_v1_client_proto_rawDesc = "" +
 	"created_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x129\n" +
 	"\n" +
 	"updated_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAt\x12/\n" +
-	"\x06status\x18\a \x01(\x0e2\x17.client.v1.ClientStatusR\x06status\"h\n" +
+	"\x06status\x18\a \x01(\x0e2\x17.client.v1.ClientStatusR\x06status\"\xa0\x01\n" +
 	"\x13CreateClientRequest\x12'\n" +
 	"\n" +
 	"service_id\x18\x01 \x01(\tB\b\xfaB\x05r\x03\xb0\x01\x01R\tserviceId\x12(\n" +
 	"\vclient_name\x18\x02 \x01(\tB\a\xfaB\x04r\x02\x10\x01R\n" +
-	"clientName\"o\n" +
+	"clientName\x126\n" +
+	"\rredirect_uris\x18\x03 \x03(\tB\x11\xfaB\x0e\x92\x01\v\b\x01\x18\x01\"\x05r\x03\x88\x01\x01R\fredirectUris\"o\n" +
 	"\x14CreateClientResponse\x12)\n" +
 	"\x06client\x18\x01 \x01(\v2\x11.client.v1.ClientR\x06client\x12,\n" +
 	"\rclient_secret\x18\x02 \x01(\tB\a\xfaB\x04r\x02\x10\x01R\fclientSecret\"=\n" +
@@ -711,7 +824,14 @@ const file_client_v1_client_proto_rawDesc = "" +
 	"\tclient_id\x18\x02 \x01(\tB\a\xfaB\x04r\x02\x10\x01R\bclientId\"|\n" +
 	"\x1aRotateClientSecretResponse\x12)\n" +
 	"\x06client\x18\x01 \x01(\v2\x11.client.v1.ClientR\x06client\x123\n" +
-	"\x11new_client_secret\x18\x02 \x01(\tB\a\xfaB\x04r\x02\x10\x01R\x0fnewClientSecret\"\xbf\x01\n" +
+	"\x11new_client_secret\x18\x02 \x01(\tB\a\xfaB\x04r\x02\x10\x01R\x0fnewClientSecret\"\xa2\x01\n" +
+	"\x19UpdateRedirectUrisRequest\x12'\n" +
+	"\n" +
+	"service_id\x18\x01 \x01(\tB\b\xfaB\x05r\x03\xb0\x01\x01R\tserviceId\x12$\n" +
+	"\tclient_id\x18\x02 \x01(\tB\a\xfaB\x04r\x02\x10\x01R\bclientId\x126\n" +
+	"\rredirect_uris\x18\x03 \x03(\tB\x11\xfaB\x0e\x92\x01\v\b\x01\x18\x01\"\x05r\x03\x88\x01\x01R\fredirectUris\"G\n" +
+	"\x1aUpdateRedirectUrisResponse\x12)\n" +
+	"\x06client\x18\x01 \x01(\v2\x11.client.v1.ClientR\x06client\"\xbf\x01\n" +
 	"\x13VerifyClientRequest\x12'\n" +
 	"\n" +
 	"service_id\x18\x01 \x01(\tB\b\xfaB\x05r\x03\xb0\x01\x01R\tserviceId\x12$\n" +
@@ -723,12 +843,13 @@ const file_client_v1_client_proto_rawDesc = "" +
 	"\fClientStatus\x12\x1d\n" +
 	"\x19CLIENT_STATUS_UNSPECIFIED\x10\x00\x12\x18\n" +
 	"\x14CLIENT_STATUS_ACTIVE\x10\x01\x12\x1a\n" +
-	"\x16CLIENT_STATUS_INACTIVE\x10\x022\xb3\x03\n" +
+	"\x16CLIENT_STATUS_INACTIVE\x10\x022\x96\x04\n" +
 	"\rClientService\x12O\n" +
 	"\fCreateClient\x12\x1e.client.v1.CreateClientRequest\x1a\x1f.client.v1.CreateClientResponse\x12L\n" +
 	"\vListClients\x12\x1d.client.v1.ListClientsRequest\x1a\x1e.client.v1.ListClientsResponse\x12O\n" +
 	"\fDeleteClient\x12\x1e.client.v1.DeleteClientRequest\x1a\x1f.client.v1.DeleteClientResponse\x12a\n" +
-	"\x12RotateClientSecret\x12$.client.v1.RotateClientSecretRequest\x1a%.client.v1.RotateClientSecretResponse\x12O\n" +
+	"\x12RotateClientSecret\x12$.client.v1.RotateClientSecretRequest\x1a%.client.v1.RotateClientSecretResponse\x12a\n" +
+	"\x12UpdateRedirectUris\x12$.client.v1.UpdateRedirectUrisRequest\x1a%.client.v1.UpdateRedirectUrisResponse\x12O\n" +
 	"\fVerifyClient\x12\x1e.client.v1.VerifyClientRequest\x1a\x1f.client.v1.VerifyClientResponseB?Z=github.com/mandacode-com/seregeti-proto/go/client/v1;clientv1b\x06proto3"
 
 var (
@@ -744,7 +865,7 @@ func file_client_v1_client_proto_rawDescGZIP() []byte {
 }
 
 var file_client_v1_client_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_client_v1_client_proto_msgTypes = make([]protoimpl.MessageInfo, 11)
+var file_client_v1_client_proto_msgTypes = make([]protoimpl.MessageInfo, 13)
 var file_client_v1_client_proto_goTypes = []any{
 	(ClientStatus)(0),                  // 0: client.v1.ClientStatus
 	(*Client)(nil),                     // 1: client.v1.Client
@@ -756,32 +877,37 @@ var file_client_v1_client_proto_goTypes = []any{
 	(*DeleteClientResponse)(nil),       // 7: client.v1.DeleteClientResponse
 	(*RotateClientSecretRequest)(nil),  // 8: client.v1.RotateClientSecretRequest
 	(*RotateClientSecretResponse)(nil), // 9: client.v1.RotateClientSecretResponse
-	(*VerifyClientRequest)(nil),        // 10: client.v1.VerifyClientRequest
-	(*VerifyClientResponse)(nil),       // 11: client.v1.VerifyClientResponse
-	(*timestamppb.Timestamp)(nil),      // 12: google.protobuf.Timestamp
+	(*UpdateRedirectUrisRequest)(nil),  // 10: client.v1.UpdateRedirectUrisRequest
+	(*UpdateRedirectUrisResponse)(nil), // 11: client.v1.UpdateRedirectUrisResponse
+	(*VerifyClientRequest)(nil),        // 12: client.v1.VerifyClientRequest
+	(*VerifyClientResponse)(nil),       // 13: client.v1.VerifyClientResponse
+	(*timestamppb.Timestamp)(nil),      // 14: google.protobuf.Timestamp
 }
 var file_client_v1_client_proto_depIdxs = []int32{
-	12, // 0: client.v1.Client.created_at:type_name -> google.protobuf.Timestamp
-	12, // 1: client.v1.Client.updated_at:type_name -> google.protobuf.Timestamp
+	14, // 0: client.v1.Client.created_at:type_name -> google.protobuf.Timestamp
+	14, // 1: client.v1.Client.updated_at:type_name -> google.protobuf.Timestamp
 	0,  // 2: client.v1.Client.status:type_name -> client.v1.ClientStatus
 	1,  // 3: client.v1.CreateClientResponse.client:type_name -> client.v1.Client
 	1,  // 4: client.v1.ListClientsResponse.clients:type_name -> client.v1.Client
 	1,  // 5: client.v1.RotateClientSecretResponse.client:type_name -> client.v1.Client
-	2,  // 6: client.v1.ClientService.CreateClient:input_type -> client.v1.CreateClientRequest
-	4,  // 7: client.v1.ClientService.ListClients:input_type -> client.v1.ListClientsRequest
-	6,  // 8: client.v1.ClientService.DeleteClient:input_type -> client.v1.DeleteClientRequest
-	8,  // 9: client.v1.ClientService.RotateClientSecret:input_type -> client.v1.RotateClientSecretRequest
-	10, // 10: client.v1.ClientService.VerifyClient:input_type -> client.v1.VerifyClientRequest
-	3,  // 11: client.v1.ClientService.CreateClient:output_type -> client.v1.CreateClientResponse
-	5,  // 12: client.v1.ClientService.ListClients:output_type -> client.v1.ListClientsResponse
-	7,  // 13: client.v1.ClientService.DeleteClient:output_type -> client.v1.DeleteClientResponse
-	9,  // 14: client.v1.ClientService.RotateClientSecret:output_type -> client.v1.RotateClientSecretResponse
-	11, // 15: client.v1.ClientService.VerifyClient:output_type -> client.v1.VerifyClientResponse
-	11, // [11:16] is the sub-list for method output_type
-	6,  // [6:11] is the sub-list for method input_type
-	6,  // [6:6] is the sub-list for extension type_name
-	6,  // [6:6] is the sub-list for extension extendee
-	0,  // [0:6] is the sub-list for field type_name
+	1,  // 6: client.v1.UpdateRedirectUrisResponse.client:type_name -> client.v1.Client
+	2,  // 7: client.v1.ClientService.CreateClient:input_type -> client.v1.CreateClientRequest
+	4,  // 8: client.v1.ClientService.ListClients:input_type -> client.v1.ListClientsRequest
+	6,  // 9: client.v1.ClientService.DeleteClient:input_type -> client.v1.DeleteClientRequest
+	8,  // 10: client.v1.ClientService.RotateClientSecret:input_type -> client.v1.RotateClientSecretRequest
+	10, // 11: client.v1.ClientService.UpdateRedirectUris:input_type -> client.v1.UpdateRedirectUrisRequest
+	12, // 12: client.v1.ClientService.VerifyClient:input_type -> client.v1.VerifyClientRequest
+	3,  // 13: client.v1.ClientService.CreateClient:output_type -> client.v1.CreateClientResponse
+	5,  // 14: client.v1.ClientService.ListClients:output_type -> client.v1.ListClientsResponse
+	7,  // 15: client.v1.ClientService.DeleteClient:output_type -> client.v1.DeleteClientResponse
+	9,  // 16: client.v1.ClientService.RotateClientSecret:output_type -> client.v1.RotateClientSecretResponse
+	11, // 17: client.v1.ClientService.UpdateRedirectUris:output_type -> client.v1.UpdateRedirectUrisResponse
+	13, // 18: client.v1.ClientService.VerifyClient:output_type -> client.v1.VerifyClientResponse
+	13, // [13:19] is the sub-list for method output_type
+	7,  // [7:13] is the sub-list for method input_type
+	7,  // [7:7] is the sub-list for extension type_name
+	7,  // [7:7] is the sub-list for extension extendee
+	0,  // [0:7] is the sub-list for field type_name
 }
 
 func init() { file_client_v1_client_proto_init() }
@@ -795,7 +921,7 @@ func file_client_v1_client_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_client_v1_client_proto_rawDesc), len(file_client_v1_client_proto_rawDesc)),
 			NumEnums:      1,
-			NumMessages:   11,
+			NumMessages:   13,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

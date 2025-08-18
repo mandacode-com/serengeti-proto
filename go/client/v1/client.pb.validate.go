@@ -335,6 +335,58 @@ func (m *CreateClientRequest) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
+	if len(m.GetRedirectUris()) < 1 {
+		err := CreateClientRequestValidationError{
+			field:  "RedirectUris",
+			reason: "value must contain at least 1 item(s)",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	_CreateClientRequest_RedirectUris_Unique := make(map[string]struct{}, len(m.GetRedirectUris()))
+
+	for idx, item := range m.GetRedirectUris() {
+		_, _ = idx, item
+
+		if _, exists := _CreateClientRequest_RedirectUris_Unique[item]; exists {
+			err := CreateClientRequestValidationError{
+				field:  fmt.Sprintf("RedirectUris[%v]", idx),
+				reason: "repeated value must contain unique items",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		} else {
+			_CreateClientRequest_RedirectUris_Unique[item] = struct{}{}
+		}
+
+		if uri, err := url.Parse(item); err != nil {
+			err = CreateClientRequestValidationError{
+				field:  fmt.Sprintf("RedirectUris[%v]", idx),
+				reason: "value must be a valid URI",
+				cause:  err,
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		} else if !uri.IsAbs() {
+			err := CreateClientRequestValidationError{
+				field:  fmt.Sprintf("RedirectUris[%v]", idx),
+				reason: "value must be absolute",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+
+	}
+
 	if len(errors) > 0 {
 		return CreateClientRequestMultiError(errors)
 	}
@@ -1334,6 +1386,322 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = RotateClientSecretResponseValidationError{}
+
+// Validate checks the field values on UpdateRedirectUrisRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *UpdateRedirectUrisRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on UpdateRedirectUrisRequest with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// UpdateRedirectUrisRequestMultiError, or nil if none found.
+func (m *UpdateRedirectUrisRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *UpdateRedirectUrisRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if err := m._validateUuid(m.GetServiceId()); err != nil {
+		err = UpdateRedirectUrisRequestValidationError{
+			field:  "ServiceId",
+			reason: "value must be a valid UUID",
+			cause:  err,
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if utf8.RuneCountInString(m.GetClientId()) < 1 {
+		err := UpdateRedirectUrisRequestValidationError{
+			field:  "ClientId",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(m.GetRedirectUris()) < 1 {
+		err := UpdateRedirectUrisRequestValidationError{
+			field:  "RedirectUris",
+			reason: "value must contain at least 1 item(s)",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	_UpdateRedirectUrisRequest_RedirectUris_Unique := make(map[string]struct{}, len(m.GetRedirectUris()))
+
+	for idx, item := range m.GetRedirectUris() {
+		_, _ = idx, item
+
+		if _, exists := _UpdateRedirectUrisRequest_RedirectUris_Unique[item]; exists {
+			err := UpdateRedirectUrisRequestValidationError{
+				field:  fmt.Sprintf("RedirectUris[%v]", idx),
+				reason: "repeated value must contain unique items",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		} else {
+			_UpdateRedirectUrisRequest_RedirectUris_Unique[item] = struct{}{}
+		}
+
+		if uri, err := url.Parse(item); err != nil {
+			err = UpdateRedirectUrisRequestValidationError{
+				field:  fmt.Sprintf("RedirectUris[%v]", idx),
+				reason: "value must be a valid URI",
+				cause:  err,
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		} else if !uri.IsAbs() {
+			err := UpdateRedirectUrisRequestValidationError{
+				field:  fmt.Sprintf("RedirectUris[%v]", idx),
+				reason: "value must be absolute",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+
+	}
+
+	if len(errors) > 0 {
+		return UpdateRedirectUrisRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+func (m *UpdateRedirectUrisRequest) _validateUuid(uuid string) error {
+	if matched := _client_uuidPattern.MatchString(uuid); !matched {
+		return errors.New("invalid uuid format")
+	}
+
+	return nil
+}
+
+// UpdateRedirectUrisRequestMultiError is an error wrapping multiple validation
+// errors returned by UpdateRedirectUrisRequest.ValidateAll() if the
+// designated constraints aren't met.
+type UpdateRedirectUrisRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m UpdateRedirectUrisRequestMultiError) Error() string {
+	msgs := make([]string, 0, len(m))
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m UpdateRedirectUrisRequestMultiError) AllErrors() []error { return m }
+
+// UpdateRedirectUrisRequestValidationError is the validation error returned by
+// UpdateRedirectUrisRequest.Validate if the designated constraints aren't met.
+type UpdateRedirectUrisRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e UpdateRedirectUrisRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e UpdateRedirectUrisRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e UpdateRedirectUrisRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e UpdateRedirectUrisRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e UpdateRedirectUrisRequestValidationError) ErrorName() string {
+	return "UpdateRedirectUrisRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e UpdateRedirectUrisRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sUpdateRedirectUrisRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = UpdateRedirectUrisRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = UpdateRedirectUrisRequestValidationError{}
+
+// Validate checks the field values on UpdateRedirectUrisResponse with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *UpdateRedirectUrisResponse) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on UpdateRedirectUrisResponse with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// UpdateRedirectUrisResponseMultiError, or nil if none found.
+func (m *UpdateRedirectUrisResponse) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *UpdateRedirectUrisResponse) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if all {
+		switch v := interface{}(m.GetClient()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, UpdateRedirectUrisResponseValidationError{
+					field:  "Client",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, UpdateRedirectUrisResponseValidationError{
+					field:  "Client",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetClient()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return UpdateRedirectUrisResponseValidationError{
+				field:  "Client",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if len(errors) > 0 {
+		return UpdateRedirectUrisResponseMultiError(errors)
+	}
+
+	return nil
+}
+
+// UpdateRedirectUrisResponseMultiError is an error wrapping multiple
+// validation errors returned by UpdateRedirectUrisResponse.ValidateAll() if
+// the designated constraints aren't met.
+type UpdateRedirectUrisResponseMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m UpdateRedirectUrisResponseMultiError) Error() string {
+	msgs := make([]string, 0, len(m))
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m UpdateRedirectUrisResponseMultiError) AllErrors() []error { return m }
+
+// UpdateRedirectUrisResponseValidationError is the validation error returned
+// by UpdateRedirectUrisResponse.Validate if the designated constraints aren't met.
+type UpdateRedirectUrisResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e UpdateRedirectUrisResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e UpdateRedirectUrisResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e UpdateRedirectUrisResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e UpdateRedirectUrisResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e UpdateRedirectUrisResponseValidationError) ErrorName() string {
+	return "UpdateRedirectUrisResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e UpdateRedirectUrisResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sUpdateRedirectUrisResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = UpdateRedirectUrisResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = UpdateRedirectUrisResponseValidationError{}
 
 // Validate checks the field values on VerifyClientRequest with the rules
 // defined in the proto definition for this message. If any rules are

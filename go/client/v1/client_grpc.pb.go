@@ -23,6 +23,7 @@ const (
 	ClientService_ListClients_FullMethodName        = "/client.v1.ClientService/ListClients"
 	ClientService_DeleteClient_FullMethodName       = "/client.v1.ClientService/DeleteClient"
 	ClientService_RotateClientSecret_FullMethodName = "/client.v1.ClientService/RotateClientSecret"
+	ClientService_UpdateRedirectUris_FullMethodName = "/client.v1.ClientService/UpdateRedirectUris"
 	ClientService_VerifyClient_FullMethodName       = "/client.v1.ClientService/VerifyClient"
 )
 
@@ -36,6 +37,7 @@ type ClientServiceClient interface {
 	ListClients(ctx context.Context, in *ListClientsRequest, opts ...grpc.CallOption) (*ListClientsResponse, error)
 	DeleteClient(ctx context.Context, in *DeleteClientRequest, opts ...grpc.CallOption) (*DeleteClientResponse, error)
 	RotateClientSecret(ctx context.Context, in *RotateClientSecretRequest, opts ...grpc.CallOption) (*RotateClientSecretResponse, error)
+	UpdateRedirectUris(ctx context.Context, in *UpdateRedirectUrisRequest, opts ...grpc.CallOption) (*UpdateRedirectUrisResponse, error)
 	VerifyClient(ctx context.Context, in *VerifyClientRequest, opts ...grpc.CallOption) (*VerifyClientResponse, error)
 }
 
@@ -87,6 +89,16 @@ func (c *clientServiceClient) RotateClientSecret(ctx context.Context, in *Rotate
 	return out, nil
 }
 
+func (c *clientServiceClient) UpdateRedirectUris(ctx context.Context, in *UpdateRedirectUrisRequest, opts ...grpc.CallOption) (*UpdateRedirectUrisResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UpdateRedirectUrisResponse)
+	err := c.cc.Invoke(ctx, ClientService_UpdateRedirectUris_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *clientServiceClient) VerifyClient(ctx context.Context, in *VerifyClientRequest, opts ...grpc.CallOption) (*VerifyClientResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(VerifyClientResponse)
@@ -107,6 +119,7 @@ type ClientServiceServer interface {
 	ListClients(context.Context, *ListClientsRequest) (*ListClientsResponse, error)
 	DeleteClient(context.Context, *DeleteClientRequest) (*DeleteClientResponse, error)
 	RotateClientSecret(context.Context, *RotateClientSecretRequest) (*RotateClientSecretResponse, error)
+	UpdateRedirectUris(context.Context, *UpdateRedirectUrisRequest) (*UpdateRedirectUrisResponse, error)
 	VerifyClient(context.Context, *VerifyClientRequest) (*VerifyClientResponse, error)
 	mustEmbedUnimplementedClientServiceServer()
 }
@@ -129,6 +142,9 @@ func (UnimplementedClientServiceServer) DeleteClient(context.Context, *DeleteCli
 }
 func (UnimplementedClientServiceServer) RotateClientSecret(context.Context, *RotateClientSecretRequest) (*RotateClientSecretResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RotateClientSecret not implemented")
+}
+func (UnimplementedClientServiceServer) UpdateRedirectUris(context.Context, *UpdateRedirectUrisRequest) (*UpdateRedirectUrisResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateRedirectUris not implemented")
 }
 func (UnimplementedClientServiceServer) VerifyClient(context.Context, *VerifyClientRequest) (*VerifyClientResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method VerifyClient not implemented")
@@ -226,6 +242,24 @@ func _ClientService_RotateClientSecret_Handler(srv interface{}, ctx context.Cont
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ClientService_UpdateRedirectUris_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateRedirectUrisRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ClientServiceServer).UpdateRedirectUris(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ClientService_UpdateRedirectUris_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ClientServiceServer).UpdateRedirectUris(ctx, req.(*UpdateRedirectUrisRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _ClientService_VerifyClient_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(VerifyClientRequest)
 	if err := dec(in); err != nil {
@@ -266,6 +300,10 @@ var ClientService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "RotateClientSecret",
 			Handler:    _ClientService_RotateClientSecret_Handler,
+		},
+		{
+			MethodName: "UpdateRedirectUris",
+			Handler:    _ClientService_UpdateRedirectUris_Handler,
 		},
 		{
 			MethodName: "VerifyClient",
