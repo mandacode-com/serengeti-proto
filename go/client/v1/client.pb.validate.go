@@ -59,6 +59,18 @@ func (m *Client) validate(all bool) error {
 
 	var errors []error
 
+	if err := m._validateUuid(m.GetId()); err != nil {
+		err = ClientValidationError{
+			field:  "Id",
+			reason: "value must be a valid UUID",
+			cause:  err,
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
 	if err := m._validateUuid(m.GetServiceId()); err != nil {
 		err = ClientValidationError{
 			field:  "ServiceId",
@@ -897,22 +909,11 @@ func (m *DeleteClientRequest) validate(all bool) error {
 
 	var errors []error
 
-	if err := m._validateUuid(m.GetServiceId()); err != nil {
+	if err := m._validateUuid(m.GetId()); err != nil {
 		err = DeleteClientRequestValidationError{
-			field:  "ServiceId",
+			field:  "Id",
 			reason: "value must be a valid UUID",
 			cause:  err,
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	if utf8.RuneCountInString(m.GetClientId()) < 1 {
-		err := DeleteClientRequestValidationError{
-			field:  "ClientId",
-			reason: "value length must be at least 1 runes",
 		}
 		if !all {
 			return err
@@ -1134,22 +1135,11 @@ func (m *RotateClientSecretRequest) validate(all bool) error {
 
 	var errors []error
 
-	if err := m._validateUuid(m.GetServiceId()); err != nil {
+	if err := m._validateUuid(m.GetId()); err != nil {
 		err = RotateClientSecretRequestValidationError{
-			field:  "ServiceId",
+			field:  "Id",
 			reason: "value must be a valid UUID",
 			cause:  err,
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	if utf8.RuneCountInString(m.GetClientId()) < 1 {
-		err := RotateClientSecretRequestValidationError{
-			field:  "ClientId",
-			reason: "value length must be at least 1 runes",
 		}
 		if !all {
 			return err
@@ -1267,35 +1257,6 @@ func (m *RotateClientSecretResponse) validate(all bool) error {
 
 	var errors []error
 
-	if all {
-		switch v := interface{}(m.GetClient()).(type) {
-		case interface{ ValidateAll() error }:
-			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, RotateClientSecretResponseValidationError{
-					field:  "Client",
-					reason: "embedded message failed validation",
-					cause:  err,
-				})
-			}
-		case interface{ Validate() error }:
-			if err := v.Validate(); err != nil {
-				errors = append(errors, RotateClientSecretResponseValidationError{
-					field:  "Client",
-					reason: "embedded message failed validation",
-					cause:  err,
-				})
-			}
-		}
-	} else if v, ok := interface{}(m.GetClient()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return RotateClientSecretResponseValidationError{
-				field:  "Client",
-				reason: "embedded message failed validation",
-				cause:  err,
-			}
-		}
-	}
-
 	if utf8.RuneCountInString(m.GetNewClientSecret()) < 1 {
 		err := RotateClientSecretResponseValidationError{
 			field:  "NewClientSecret",
@@ -1409,22 +1370,11 @@ func (m *UpdateRedirectUrisRequest) validate(all bool) error {
 
 	var errors []error
 
-	if err := m._validateUuid(m.GetServiceId()); err != nil {
+	if err := m._validateUuid(m.GetId()); err != nil {
 		err = UpdateRedirectUrisRequestValidationError{
-			field:  "ServiceId",
+			field:  "Id",
 			reason: "value must be a valid UUID",
 			cause:  err,
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	if utf8.RuneCountInString(m.GetClientId()) < 1 {
-		err := UpdateRedirectUrisRequestValidationError{
-			field:  "ClientId",
-			reason: "value length must be at least 1 runes",
 		}
 		if !all {
 			return err

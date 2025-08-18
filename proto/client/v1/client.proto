@@ -15,19 +15,20 @@ enum ClientStatus {
 }
 
 message Client {
-  string service_id = 1 [(validate.rules).string = {uuid: true}]; // Unique identifier for the service
-  string client_id = 2 [(validate.rules).string = {min_len: 1}]; // Unique identifier for the client
-  string client_name = 3 [(validate.rules).string = {min_len: 1}]; // Name of the client
-  repeated string redirect_uris = 4 [(validate.rules).repeated = {
+  string id = 1 [(validate.rules).string = {uuid: true}]; // Unique identifier for the client
+  string service_id = 2 [(validate.rules).string = {uuid: true}];
+  string client_id = 3 [(validate.rules).string = {min_len: 1}];
+  string client_name = 4 [(validate.rules).string = {min_len: 1}]; // Name of the client
+  repeated string redirect_uris = 5 [(validate.rules).repeated = {
     min_items: 1
     unique: true
     items: {
       string: {uri: true} /* Each redirect URI must be a valid URI */
     }
   }]; // List of redirect URIs for the client
-  google.protobuf.Timestamp created_at = 5;
-  google.protobuf.Timestamp updated_at = 6;
-  ClientStatus status = 7; // Status of the client
+  google.protobuf.Timestamp created_at = 6;
+  google.protobuf.Timestamp updated_at = 7;
+  ClientStatus status = 8; // Status of the client
 }
 
 // service definitions
@@ -66,8 +67,7 @@ message ListClientsResponse {
 }
 
 message DeleteClientRequest {
-  string service_id = 1 [(validate.rules).string = {uuid: true}]; // Unique identifier for the service
-  string client_id = 2 [(validate.rules).string = {min_len: 1}]; // Unique identifier for the client
+  string id = 1 [(validate.rules).string = {uuid: true}]; // Unique identifier for the client to be deleted
 }
 
 message DeleteClientResponse {
@@ -75,19 +75,16 @@ message DeleteClientResponse {
 }
 
 message RotateClientSecretRequest {
-  string service_id = 1 [(validate.rules).string = {uuid: true}]; // Unique identifier for the service
-  string client_id = 2 [(validate.rules).string = {min_len: 1}]; // Unique identifier for the client
+  string id = 1 [(validate.rules).string = {uuid: true}]; // Unique identifier for the client to rotate secret
 }
 
 message RotateClientSecretResponse {
-  Client client = 1; // Client with the new secret
-  string new_client_secret = 2 [(validate.rules).string = {min_len: 1}]; // New secret for the client
+  string new_client_secret = 1 [(validate.rules).string = {min_len: 1}]; // New secret for the client
 }
 
 message UpdateRedirectUrisRequest {
-  string service_id = 1 [(validate.rules).string = {uuid: true}]; // Unique identifier for the service
-  string client_id = 2 [(validate.rules).string = {min_len: 1}]; // Unique identifier for the client
-  repeated string redirect_uris = 3 [(validate.rules).repeated = {
+  string id = 1 [(validate.rules).string = {uuid: true}]; // Unique identifier for the client to update redirect URIs
+  repeated string redirect_uris = 2 [(validate.rules).repeated = {
     min_items: 1
     unique: true
     items: {
