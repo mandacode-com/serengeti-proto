@@ -17,9 +17,10 @@ enum ClientStatus {
 message Client {
   string service_id = 1 [(validate.rules).string = {uuid: true}]; // Unique identifier for the service
   string client_id = 2 [(validate.rules).string = {min_len: 1}]; // Unique identifier for the client
-  google.protobuf.Timestamp created_at = 3;
-  google.protobuf.Timestamp updated_at = 4;
-  ClientStatus status = 5; // Status of the client
+  string client_name = 3 [(validate.rules).string = {min_len: 1}]; // Name of the client
+  google.protobuf.Timestamp created_at = 4;
+  google.protobuf.Timestamp updated_at = 5;
+  ClientStatus status = 6; // Status of the client
 }
 
 // service definitions
@@ -33,6 +34,7 @@ service ClientService {
 
 message CreateClientRequest {
   string service_id = 1 [(validate.rules).string = {uuid: true}]; // Unique identifier for the service
+  string client_name = 2 [(validate.rules).string = {min_len: 1}]; // Name of the client
 }
 
 message CreateClientResponse {

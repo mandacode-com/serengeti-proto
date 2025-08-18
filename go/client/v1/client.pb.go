@@ -75,11 +75,12 @@ func (ClientStatus) EnumDescriptor() ([]byte, []int) {
 
 type Client struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	ServiceId     string                 `protobuf:"bytes,1,opt,name=service_id,json=serviceId,proto3" json:"service_id,omitempty"` // Unique identifier for the service
-	ClientId      string                 `protobuf:"bytes,2,opt,name=client_id,json=clientId,proto3" json:"client_id,omitempty"`    // Unique identifier for the client
-	CreatedAt     *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
-	UpdatedAt     *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
-	Status        ClientStatus           `protobuf:"varint,5,opt,name=status,proto3,enum=client.v1.ClientStatus" json:"status,omitempty"` // Status of the client
+	ServiceId     string                 `protobuf:"bytes,1,opt,name=service_id,json=serviceId,proto3" json:"service_id,omitempty"`    // Unique identifier for the service
+	ClientId      string                 `protobuf:"bytes,2,opt,name=client_id,json=clientId,proto3" json:"client_id,omitempty"`       // Unique identifier for the client
+	ClientName    string                 `protobuf:"bytes,3,opt,name=client_name,json=clientName,proto3" json:"client_name,omitempty"` // Name of the client
+	CreatedAt     *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	UpdatedAt     *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
+	Status        ClientStatus           `protobuf:"varint,6,opt,name=status,proto3,enum=client.v1.ClientStatus" json:"status,omitempty"` // Status of the client
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -128,6 +129,13 @@ func (x *Client) GetClientId() string {
 	return ""
 }
 
+func (x *Client) GetClientName() string {
+	if x != nil {
+		return x.ClientName
+	}
+	return ""
+}
+
 func (x *Client) GetCreatedAt() *timestamppb.Timestamp {
 	if x != nil {
 		return x.CreatedAt
@@ -151,7 +159,8 @@ func (x *Client) GetStatus() ClientStatus {
 
 type CreateClientRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	ServiceId     string                 `protobuf:"bytes,1,opt,name=service_id,json=serviceId,proto3" json:"service_id,omitempty"` // Unique identifier for the service
+	ServiceId     string                 `protobuf:"bytes,1,opt,name=service_id,json=serviceId,proto3" json:"service_id,omitempty"`    // Unique identifier for the service
+	ClientName    string                 `protobuf:"bytes,2,opt,name=client_name,json=clientName,proto3" json:"client_name,omitempty"` // Name of the client
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -189,6 +198,13 @@ func (*CreateClientRequest) Descriptor() ([]byte, []int) {
 func (x *CreateClientRequest) GetServiceId() string {
 	if x != nil {
 		return x.ServiceId
+	}
+	return ""
+}
+
+func (x *CreateClientRequest) GetClientName() string {
+	if x != nil {
+		return x.ClientName
 	}
 	return ""
 }
@@ -641,19 +657,23 @@ var File_client_v1_client_proto protoreflect.FileDescriptor
 
 const file_client_v1_client_proto_rawDesc = "" +
 	"\n" +
-	"\x16client/v1/client.proto\x12\tclient.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a#third_party/validate/validate.proto\"\xfe\x01\n" +
+	"\x16client/v1/client.proto\x12\tclient.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a#third_party/validate/validate.proto\"\xa8\x02\n" +
 	"\x06Client\x12'\n" +
 	"\n" +
 	"service_id\x18\x01 \x01(\tB\b\xfaB\x05r\x03\xb0\x01\x01R\tserviceId\x12$\n" +
-	"\tclient_id\x18\x02 \x01(\tB\a\xfaB\x04r\x02\x10\x01R\bclientId\x129\n" +
+	"\tclient_id\x18\x02 \x01(\tB\a\xfaB\x04r\x02\x10\x01R\bclientId\x12(\n" +
+	"\vclient_name\x18\x03 \x01(\tB\a\xfaB\x04r\x02\x10\x01R\n" +
+	"clientName\x129\n" +
 	"\n" +
-	"created_at\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x129\n" +
+	"created_at\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x129\n" +
 	"\n" +
-	"updated_at\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAt\x12/\n" +
-	"\x06status\x18\x05 \x01(\x0e2\x17.client.v1.ClientStatusR\x06status\">\n" +
+	"updated_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAt\x12/\n" +
+	"\x06status\x18\x06 \x01(\x0e2\x17.client.v1.ClientStatusR\x06status\"h\n" +
 	"\x13CreateClientRequest\x12'\n" +
 	"\n" +
-	"service_id\x18\x01 \x01(\tB\b\xfaB\x05r\x03\xb0\x01\x01R\tserviceId\"o\n" +
+	"service_id\x18\x01 \x01(\tB\b\xfaB\x05r\x03\xb0\x01\x01R\tserviceId\x12(\n" +
+	"\vclient_name\x18\x02 \x01(\tB\a\xfaB\x04r\x02\x10\x01R\n" +
+	"clientName\"o\n" +
 	"\x14CreateClientResponse\x12)\n" +
 	"\x06client\x18\x01 \x01(\v2\x11.client.v1.ClientR\x06client\x12,\n" +
 	"\rclient_secret\x18\x02 \x01(\tB\a\xfaB\x04r\x02\x10\x01R\fclientSecret\"=\n" +

@@ -82,6 +82,17 @@ func (m *Client) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
+	if utf8.RuneCountInString(m.GetClientName()) < 1 {
+		err := ClientValidationError{
+			field:  "ClientName",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
 	if all {
 		switch v := interface{}(m.GetCreatedAt()).(type) {
 		case interface{ ValidateAll() error }:
@@ -254,6 +265,17 @@ func (m *CreateClientRequest) validate(all bool) error {
 			field:  "ServiceId",
 			reason: "value must be a valid UUID",
 			cause:  err,
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if utf8.RuneCountInString(m.GetClientName()) < 1 {
+		err := CreateClientRequestValidationError{
+			field:  "ClientName",
+			reason: "value length must be at least 1 runes",
 		}
 		if !all {
 			return err
