@@ -101,9 +101,9 @@ message VerifyClientRequest {
   string service_id = 1 [(validate.rules).string = {uuid: true}]; // Unique identifier for the service
   string client_id = 2 [(validate.rules).string = {min_len: 1}]; // Unique identifier for the client
   bytes client_secret = 3 [(validate.rules).bytes = {min_len: 1}]; // Secret for the client, using bytes for flexibility
-  string redirect_uri = 4 [(validate.rules).string = {uri: true}]; // Redirect URI for the client
 }
 
 message VerifyClientResponse {
   bool verified = 1; // Indicates if the client was successfully verified
+  Client client = 2; // Verified client details
 }

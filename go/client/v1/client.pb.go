@@ -650,7 +650,6 @@ type VerifyClientRequest struct {
 	ServiceId     string                 `protobuf:"bytes,1,opt,name=service_id,json=serviceId,proto3" json:"service_id,omitempty"`          // Unique identifier for the service
 	ClientId      string                 `protobuf:"bytes,2,opt,name=client_id,json=clientId,proto3" json:"client_id,omitempty"`             // Unique identifier for the client
 	ClientSecret  []byte                 `protobuf:"bytes,3,opt,name=client_secret,json=clientSecret,proto3" json:"client_secret,omitempty"` // Secret for the client, using bytes for flexibility
-	RedirectUri   string                 `protobuf:"bytes,4,opt,name=redirect_uri,json=redirectUri,proto3" json:"redirect_uri,omitempty"`    // Redirect URI for the client
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -706,16 +705,10 @@ func (x *VerifyClientRequest) GetClientSecret() []byte {
 	return nil
 }
 
-func (x *VerifyClientRequest) GetRedirectUri() string {
-	if x != nil {
-		return x.RedirectUri
-	}
-	return ""
-}
-
 type VerifyClientResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Verified      bool                   `protobuf:"varint,1,opt,name=verified,proto3" json:"verified,omitempty"` // Indicates if the client was successfully verified
+	Client        *Client                `protobuf:"bytes,2,opt,name=client,proto3" json:"client,omitempty"`      // Verified client details
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -755,6 +748,13 @@ func (x *VerifyClientResponse) GetVerified() bool {
 		return x.Verified
 	}
 	return false
+}
+
+func (x *VerifyClientResponse) GetClient() *Client {
+	if x != nil {
+		return x.Client
+	}
+	return nil
 }
 
 var File_client_v1_client_proto protoreflect.FileDescriptor
@@ -801,15 +801,15 @@ const file_client_v1_client_proto_rawDesc = "" +
 	"\x02id\x18\x01 \x01(\tB\b\xfaB\x05r\x03\xb0\x01\x01R\x02id\x126\n" +
 	"\rredirect_uris\x18\x02 \x03(\tB\x11\xfaB\x0e\x92\x01\v\b\x01\x18\x01\"\x05r\x03\x88\x01\x01R\fredirectUris\"G\n" +
 	"\x1aUpdateRedirectUrisResponse\x12)\n" +
-	"\x06client\x18\x01 \x01(\v2\x11.client.v1.ClientR\x06client\"\xbf\x01\n" +
+	"\x06client\x18\x01 \x01(\v2\x11.client.v1.ClientR\x06client\"\x92\x01\n" +
 	"\x13VerifyClientRequest\x12'\n" +
 	"\n" +
 	"service_id\x18\x01 \x01(\tB\b\xfaB\x05r\x03\xb0\x01\x01R\tserviceId\x12$\n" +
 	"\tclient_id\x18\x02 \x01(\tB\a\xfaB\x04r\x02\x10\x01R\bclientId\x12,\n" +
-	"\rclient_secret\x18\x03 \x01(\fB\a\xfaB\x04z\x02\x10\x01R\fclientSecret\x12+\n" +
-	"\fredirect_uri\x18\x04 \x01(\tB\b\xfaB\x05r\x03\x88\x01\x01R\vredirectUri\"2\n" +
+	"\rclient_secret\x18\x03 \x01(\fB\a\xfaB\x04z\x02\x10\x01R\fclientSecret\"]\n" +
 	"\x14VerifyClientResponse\x12\x1a\n" +
-	"\bverified\x18\x01 \x01(\bR\bverified*c\n" +
+	"\bverified\x18\x01 \x01(\bR\bverified\x12)\n" +
+	"\x06client\x18\x02 \x01(\v2\x11.client.v1.ClientR\x06client*c\n" +
 	"\fClientStatus\x12\x1d\n" +
 	"\x19CLIENT_STATUS_UNSPECIFIED\x10\x00\x12\x18\n" +
 	"\x14CLIENT_STATUS_ACTIVE\x10\x01\x12\x1a\n" +
@@ -860,23 +860,24 @@ var file_client_v1_client_proto_depIdxs = []int32{
 	1,  // 3: client.v1.CreateClientResponse.client:type_name -> client.v1.Client
 	1,  // 4: client.v1.ListClientsResponse.clients:type_name -> client.v1.Client
 	1,  // 5: client.v1.UpdateRedirectUrisResponse.client:type_name -> client.v1.Client
-	2,  // 6: client.v1.ClientService.CreateClient:input_type -> client.v1.CreateClientRequest
-	4,  // 7: client.v1.ClientService.ListClients:input_type -> client.v1.ListClientsRequest
-	6,  // 8: client.v1.ClientService.DeleteClient:input_type -> client.v1.DeleteClientRequest
-	8,  // 9: client.v1.ClientService.RotateClientSecret:input_type -> client.v1.RotateClientSecretRequest
-	10, // 10: client.v1.ClientService.UpdateRedirectUris:input_type -> client.v1.UpdateRedirectUrisRequest
-	12, // 11: client.v1.ClientService.VerifyClient:input_type -> client.v1.VerifyClientRequest
-	3,  // 12: client.v1.ClientService.CreateClient:output_type -> client.v1.CreateClientResponse
-	5,  // 13: client.v1.ClientService.ListClients:output_type -> client.v1.ListClientsResponse
-	7,  // 14: client.v1.ClientService.DeleteClient:output_type -> client.v1.DeleteClientResponse
-	9,  // 15: client.v1.ClientService.RotateClientSecret:output_type -> client.v1.RotateClientSecretResponse
-	11, // 16: client.v1.ClientService.UpdateRedirectUris:output_type -> client.v1.UpdateRedirectUrisResponse
-	13, // 17: client.v1.ClientService.VerifyClient:output_type -> client.v1.VerifyClientResponse
-	12, // [12:18] is the sub-list for method output_type
-	6,  // [6:12] is the sub-list for method input_type
-	6,  // [6:6] is the sub-list for extension type_name
-	6,  // [6:6] is the sub-list for extension extendee
-	0,  // [0:6] is the sub-list for field type_name
+	1,  // 6: client.v1.VerifyClientResponse.client:type_name -> client.v1.Client
+	2,  // 7: client.v1.ClientService.CreateClient:input_type -> client.v1.CreateClientRequest
+	4,  // 8: client.v1.ClientService.ListClients:input_type -> client.v1.ListClientsRequest
+	6,  // 9: client.v1.ClientService.DeleteClient:input_type -> client.v1.DeleteClientRequest
+	8,  // 10: client.v1.ClientService.RotateClientSecret:input_type -> client.v1.RotateClientSecretRequest
+	10, // 11: client.v1.ClientService.UpdateRedirectUris:input_type -> client.v1.UpdateRedirectUrisRequest
+	12, // 12: client.v1.ClientService.VerifyClient:input_type -> client.v1.VerifyClientRequest
+	3,  // 13: client.v1.ClientService.CreateClient:output_type -> client.v1.CreateClientResponse
+	5,  // 14: client.v1.ClientService.ListClients:output_type -> client.v1.ListClientsResponse
+	7,  // 15: client.v1.ClientService.DeleteClient:output_type -> client.v1.DeleteClientResponse
+	9,  // 16: client.v1.ClientService.RotateClientSecret:output_type -> client.v1.RotateClientSecretResponse
+	11, // 17: client.v1.ClientService.UpdateRedirectUris:output_type -> client.v1.UpdateRedirectUrisResponse
+	13, // 18: client.v1.ClientService.VerifyClient:output_type -> client.v1.VerifyClientResponse
+	13, // [13:19] is the sub-list for method output_type
+	7,  // [7:13] is the sub-list for method input_type
+	7,  // [7:7] is the sub-list for extension type_name
+	7,  // [7:7] is the sub-list for extension extendee
+	0,  // [0:7] is the sub-list for field type_name
 }
 
 func init() { file_client_v1_client_proto_init() }
