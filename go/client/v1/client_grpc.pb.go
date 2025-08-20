@@ -20,6 +20,7 @@ const _ = grpc.SupportPackageIsVersion9
 
 const (
 	ClientService_CreateClient_FullMethodName       = "/client.v1.ClientService/CreateClient"
+	ClientService_GetClient_FullMethodName          = "/client.v1.ClientService/GetClient"
 	ClientService_ListClients_FullMethodName        = "/client.v1.ClientService/ListClients"
 	ClientService_DeleteClient_FullMethodName       = "/client.v1.ClientService/DeleteClient"
 	ClientService_RotateClientSecret_FullMethodName = "/client.v1.ClientService/RotateClientSecret"
@@ -34,6 +35,7 @@ const (
 // service definitions
 type ClientServiceClient interface {
 	CreateClient(ctx context.Context, in *CreateClientRequest, opts ...grpc.CallOption) (*CreateClientResponse, error)
+	GetClient(ctx context.Context, in *GetClientRequest, opts ...grpc.CallOption) (*GetClientResponse, error)
 	ListClients(ctx context.Context, in *ListClientsRequest, opts ...grpc.CallOption) (*ListClientsResponse, error)
 	DeleteClient(ctx context.Context, in *DeleteClientRequest, opts ...grpc.CallOption) (*DeleteClientResponse, error)
 	RotateClientSecret(ctx context.Context, in *RotateClientSecretRequest, opts ...grpc.CallOption) (*RotateClientSecretResponse, error)
@@ -53,6 +55,16 @@ func (c *clientServiceClient) CreateClient(ctx context.Context, in *CreateClient
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(CreateClientResponse)
 	err := c.cc.Invoke(ctx, ClientService_CreateClient_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *clientServiceClient) GetClient(ctx context.Context, in *GetClientRequest, opts ...grpc.CallOption) (*GetClientResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetClientResponse)
+	err := c.cc.Invoke(ctx, ClientService_GetClient_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -116,6 +128,7 @@ func (c *clientServiceClient) VerifyClient(ctx context.Context, in *VerifyClient
 // service definitions
 type ClientServiceServer interface {
 	CreateClient(context.Context, *CreateClientRequest) (*CreateClientResponse, error)
+	GetClient(context.Context, *GetClientRequest) (*GetClientResponse, error)
 	ListClients(context.Context, *ListClientsRequest) (*ListClientsResponse, error)
 	DeleteClient(context.Context, *DeleteClientRequest) (*DeleteClientResponse, error)
 	RotateClientSecret(context.Context, *RotateClientSecretRequest) (*RotateClientSecretResponse, error)
@@ -133,6 +146,9 @@ type UnimplementedClientServiceServer struct{}
 
 func (UnimplementedClientServiceServer) CreateClient(context.Context, *CreateClientRequest) (*CreateClientResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateClient not implemented")
+}
+func (UnimplementedClientServiceServer) GetClient(context.Context, *GetClientRequest) (*GetClientResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetClient not implemented")
 }
 func (UnimplementedClientServiceServer) ListClients(context.Context, *ListClientsRequest) (*ListClientsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListClients not implemented")
@@ -184,6 +200,24 @@ func _ClientService_CreateClient_Handler(srv interface{}, ctx context.Context, d
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ClientServiceServer).CreateClient(ctx, req.(*CreateClientRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ClientService_GetClient_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetClientRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ClientServiceServer).GetClient(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ClientService_GetClient_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ClientServiceServer).GetClient(ctx, req.(*GetClientRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -288,6 +322,10 @@ var ClientService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CreateClient",
 			Handler:    _ClientService_CreateClient_Handler,
+		},
+		{
+			MethodName: "GetClient",
+			Handler:    _ClientService_GetClient_Handler,
 		},
 		{
 			MethodName: "ListClients",
