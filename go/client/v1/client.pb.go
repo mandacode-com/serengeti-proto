@@ -75,7 +75,7 @@ func (ClientStatus) EnumDescriptor() ([]byte, []int) {
 
 type Client struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	ServiceId     string                 `protobuf:"bytes,1,opt,name=service_id,json=serviceId,proto3" json:"service_id,omitempty"`
+	ServiceId     string                 `protobuf:"bytes,1,opt,name=service_id,json=serviceId,proto3" json:"service_id,omitempty"` // Unique identifier for the service
 	ClientId      string                 `protobuf:"bytes,2,opt,name=client_id,json=clientId,proto3" json:"client_id,omitempty"`
 	ClientName    string                 `protobuf:"bytes,3,opt,name=client_name,json=clientName,proto3" json:"client_name,omitempty"`       // Name of the client
 	RedirectUris  []string               `protobuf:"bytes,4,rep,name=redirect_uris,json=redirectUris,proto3" json:"redirect_uris,omitempty"` // List of redirect URIs for the client
@@ -873,10 +873,10 @@ var File_client_v1_client_proto protoreflect.FileDescriptor
 
 const file_client_v1_client_proto_rawDesc = "" +
 	"\n" +
-	"\x16client/v1/client.proto\x12\tclient.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a#third_party/validate/validate.proto\"\xe0\x02\n" +
-	"\x06Client\x12'\n" +
+	"\x16client/v1/client.proto\x12\tclient.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a#third_party/validate/validate.proto\"\xdf\x02\n" +
+	"\x06Client\x12&\n" +
 	"\n" +
-	"service_id\x18\x01 \x01(\tB\b\xfaB\x05r\x03\xb0\x01\x01R\tserviceId\x12$\n" +
+	"service_id\x18\x01 \x01(\tB\a\xfaB\x04r\x02\x10\x01R\tserviceId\x12$\n" +
 	"\tclient_id\x18\x02 \x01(\tB\a\xfaB\x04r\x02\x10\x01R\bclientId\x12(\n" +
 	"\vclient_name\x18\x03 \x01(\tB\a\xfaB\x04r\x02\x10\x01R\n" +
 	"clientName\x126\n" +
@@ -885,49 +885,49 @@ const file_client_v1_client_proto_rawDesc = "" +
 	"created_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x129\n" +
 	"\n" +
 	"updated_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAt\x12/\n" +
-	"\x06status\x18\a \x01(\x0e2\x17.client.v1.ClientStatusR\x06status\"\xa0\x01\n" +
-	"\x13CreateClientRequest\x12'\n" +
+	"\x06status\x18\a \x01(\x0e2\x17.client.v1.ClientStatusR\x06status\"\x9f\x01\n" +
+	"\x13CreateClientRequest\x12&\n" +
 	"\n" +
-	"service_id\x18\x01 \x01(\tB\b\xfaB\x05r\x03\xb0\x01\x01R\tserviceId\x12(\n" +
+	"service_id\x18\x01 \x01(\tB\a\xfaB\x04r\x02\x10\x01R\tserviceId\x12(\n" +
 	"\vclient_name\x18\x02 \x01(\tB\a\xfaB\x04r\x02\x10\x01R\n" +
 	"clientName\x126\n" +
 	"\rredirect_uris\x18\x03 \x03(\tB\x11\xfaB\x0e\x92\x01\v\b\x01\x18\x01\"\x05r\x03\x88\x01\x01R\fredirectUris\"o\n" +
 	"\x14CreateClientResponse\x12)\n" +
 	"\x06client\x18\x01 \x01(\v2\x11.client.v1.ClientR\x06client\x12,\n" +
-	"\rclient_secret\x18\x02 \x01(\fB\a\xfaB\x04z\x02\x10\x01R\fclientSecret\"a\n" +
-	"\x10GetClientRequest\x12'\n" +
+	"\rclient_secret\x18\x02 \x01(\fB\a\xfaB\x04z\x02\x10\x01R\fclientSecret\"`\n" +
+	"\x10GetClientRequest\x12&\n" +
 	"\n" +
-	"service_id\x18\x01 \x01(\tB\b\xfaB\x05r\x03\xb0\x01\x01R\tserviceId\x12$\n" +
+	"service_id\x18\x01 \x01(\tB\a\xfaB\x04r\x02\x10\x01R\tserviceId\x12$\n" +
 	"\tclient_id\x18\x02 \x01(\tB\a\xfaB\x04r\x02\x10\x01R\bclientId\">\n" +
 	"\x11GetClientResponse\x12)\n" +
-	"\x06client\x18\x01 \x01(\v2\x11.client.v1.ClientR\x06client\"=\n" +
-	"\x12ListClientsRequest\x12'\n" +
+	"\x06client\x18\x01 \x01(\v2\x11.client.v1.ClientR\x06client\"<\n" +
+	"\x12ListClientsRequest\x12&\n" +
 	"\n" +
-	"service_id\x18\x01 \x01(\tB\b\xfaB\x05r\x03\xb0\x01\x01R\tserviceId\"B\n" +
+	"service_id\x18\x01 \x01(\tB\a\xfaB\x04r\x02\x10\x01R\tserviceId\"B\n" +
 	"\x13ListClientsResponse\x12+\n" +
-	"\aclients\x18\x01 \x03(\v2\x11.client.v1.ClientR\aclients\"d\n" +
-	"\x13DeleteClientRequest\x12'\n" +
+	"\aclients\x18\x01 \x03(\v2\x11.client.v1.ClientR\aclients\"c\n" +
+	"\x13DeleteClientRequest\x12&\n" +
 	"\n" +
-	"service_id\x18\x01 \x01(\tB\b\xfaB\x05r\x03\xb0\x01\x01R\tserviceId\x12$\n" +
+	"service_id\x18\x01 \x01(\tB\a\xfaB\x04r\x02\x10\x01R\tserviceId\x12$\n" +
 	"\tclient_id\x18\x02 \x01(\tB\a\xfaB\x04r\x02\x10\x01R\bclientId\"0\n" +
 	"\x14DeleteClientResponse\x12\x18\n" +
-	"\asuccess\x18\x01 \x01(\bR\asuccess\"j\n" +
-	"\x19RotateClientSecretRequest\x12'\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\"i\n" +
+	"\x19RotateClientSecretRequest\x12&\n" +
 	"\n" +
-	"service_id\x18\x01 \x01(\tB\b\xfaB\x05r\x03\xb0\x01\x01R\tserviceId\x12$\n" +
+	"service_id\x18\x01 \x01(\tB\a\xfaB\x04r\x02\x10\x01R\tserviceId\x12$\n" +
 	"\tclient_id\x18\x02 \x01(\tB\a\xfaB\x04r\x02\x10\x01R\bclientId\"Q\n" +
 	"\x1aRotateClientSecretResponse\x123\n" +
-	"\x11new_client_secret\x18\x01 \x01(\fB\a\xfaB\x04z\x02\x10\x01R\x0fnewClientSecret\"\xa2\x01\n" +
-	"\x19UpdateRedirectUrisRequest\x12'\n" +
+	"\x11new_client_secret\x18\x01 \x01(\fB\a\xfaB\x04z\x02\x10\x01R\x0fnewClientSecret\"\xa1\x01\n" +
+	"\x19UpdateRedirectUrisRequest\x12&\n" +
 	"\n" +
-	"service_id\x18\x01 \x01(\tB\b\xfaB\x05r\x03\xb0\x01\x01R\tserviceId\x12$\n" +
+	"service_id\x18\x01 \x01(\tB\a\xfaB\x04r\x02\x10\x01R\tserviceId\x12$\n" +
 	"\tclient_id\x18\x02 \x01(\tB\a\xfaB\x04r\x02\x10\x01R\bclientId\x126\n" +
 	"\rredirect_uris\x18\x03 \x03(\tB\x11\xfaB\x0e\x92\x01\v\b\x01\x18\x01\"\x05r\x03\x88\x01\x01R\fredirectUris\"G\n" +
 	"\x1aUpdateRedirectUrisResponse\x12)\n" +
-	"\x06client\x18\x01 \x01(\v2\x11.client.v1.ClientR\x06client\"\x92\x01\n" +
-	"\x13VerifyClientRequest\x12'\n" +
+	"\x06client\x18\x01 \x01(\v2\x11.client.v1.ClientR\x06client\"\x91\x01\n" +
+	"\x13VerifyClientRequest\x12&\n" +
 	"\n" +
-	"service_id\x18\x01 \x01(\tB\b\xfaB\x05r\x03\xb0\x01\x01R\tserviceId\x12$\n" +
+	"service_id\x18\x01 \x01(\tB\a\xfaB\x04r\x02\x10\x01R\tserviceId\x12$\n" +
 	"\tclient_id\x18\x02 \x01(\tB\a\xfaB\x04r\x02\x10\x01R\bclientId\x12,\n" +
 	"\rclient_secret\x18\x03 \x01(\fB\a\xfaB\x04z\x02\x10\x01R\fclientSecret\"]\n" +
 	"\x14VerifyClientResponse\x12\x1a\n" +

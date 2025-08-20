@@ -15,7 +15,7 @@ enum ClientStatus {
 }
 
 message Client {
-  string service_id = 1 [(validate.rules).string = {uuid: true}];
+  string service_id = 1 [(validate.rules).string = {min_len: 1}]; // Unique identifier for the service
   string client_id = 2 [(validate.rules).string = {min_len: 1}];
   string client_name = 3 [(validate.rules).string = {min_len: 1}]; // Name of the client
   repeated string redirect_uris = 4 [(validate.rules).repeated = {
@@ -42,7 +42,7 @@ service ClientService {
 }
 
 message CreateClientRequest {
-  string service_id = 1 [(validate.rules).string = {uuid: true}]; // Unique identifier for the service
+  string service_id = 1 [(validate.rules).string = {min_len: 1}]; // Unique identifier for the service
   string client_name = 2 [(validate.rules).string = {min_len: 1}]; // Name of the client
   repeated string redirect_uris = 3 [(validate.rules).repeated = {
     min_items: 1
@@ -59,7 +59,7 @@ message CreateClientResponse {
 }
 
 message GetClientRequest {
-  string service_id = 1 [(validate.rules).string = {uuid: true}]; // Unique identifier for the service
+  string service_id = 1 [(validate.rules).string = {min_len: 1}]; // Unique identifier for the service
   string client_id = 2 [(validate.rules).string = {min_len: 1}]; // Unique identifier for the client
 }
 
@@ -68,7 +68,7 @@ message GetClientResponse {
 }
 
 message ListClientsRequest {
-  string service_id = 1 [(validate.rules).string = {uuid: true}]; // Unique identifier for the service
+  string service_id = 1 [(validate.rules).string = {min_len: 1}]; // Unique identifier for the service
 }
 
 message ListClientsResponse {
@@ -76,7 +76,7 @@ message ListClientsResponse {
 }
 
 message DeleteClientRequest {
-  string service_id = 1 [(validate.rules).string = {uuid: true}]; // Unique identifier for the service
+  string service_id = 1 [(validate.rules).string = {min_len: 1}]; // Unique identifier for the service
   string client_id = 2 [(validate.rules).string = {min_len: 1}]; // Unique identifier for the client to be deleted
 }
 
@@ -85,7 +85,7 @@ message DeleteClientResponse {
 }
 
 message RotateClientSecretRequest {
-  string service_id = 1 [(validate.rules).string = {uuid: true}]; // Unique identifier for the service
+  string service_id = 1 [(validate.rules).string = {min_len: 1}]; // Unique identifier for the service
   string client_id = 2 [(validate.rules).string = {min_len: 1}]; // Unique identifier for the client
 }
 
@@ -94,7 +94,7 @@ message RotateClientSecretResponse {
 }
 
 message UpdateRedirectUrisRequest {
-  string service_id = 1 [(validate.rules).string = {uuid: true}]; // Unique identifier for the service
+  string service_id = 1 [(validate.rules).string = {min_len: 1}]; // Unique identifier for the service
   string client_id = 2 [(validate.rules).string = {min_len: 1}]; // Unique identifier for the client
   repeated string redirect_uris = 3 [(validate.rules).repeated = {
     min_items: 1
@@ -110,7 +110,7 @@ message UpdateRedirectUrisResponse {
 }
 
 message VerifyClientRequest {
-  string service_id = 1 [(validate.rules).string = {uuid: true}]; // Unique identifier for the service
+  string service_id = 1 [(validate.rules).string = {min_len: 1}]; // Unique identifier for the service
   string client_id = 2 [(validate.rules).string = {min_len: 1}]; // Unique identifier for the client
   bytes client_secret = 3 [(validate.rules).bytes = {min_len: 1}]; // Secret for the client, using bytes for flexibility
 }

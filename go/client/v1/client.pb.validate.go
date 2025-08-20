@@ -35,9 +35,6 @@ var (
 	_ = sort.Sort
 )
 
-// define the regex for a UUID once up-front
-var _client_uuidPattern = regexp.MustCompile("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$")
-
 // Validate checks the field values on Client with the rules defined in the
 // proto definition for this message. If any rules are violated, the first
 // error encountered is returned, or nil if there are no violations.
@@ -59,11 +56,10 @@ func (m *Client) validate(all bool) error {
 
 	var errors []error
 
-	if err := m._validateUuid(m.GetServiceId()); err != nil {
-		err = ClientValidationError{
+	if utf8.RuneCountInString(m.GetServiceId()) < 1 {
+		err := ClientValidationError{
 			field:  "ServiceId",
-			reason: "value must be a valid UUID",
-			cause:  err,
+			reason: "value length must be at least 1 runes",
 		}
 		if !all {
 			return err
@@ -212,14 +208,6 @@ func (m *Client) validate(all bool) error {
 	return nil
 }
 
-func (m *Client) _validateUuid(uuid string) error {
-	if matched := _client_uuidPattern.MatchString(uuid); !matched {
-		return errors.New("invalid uuid format")
-	}
-
-	return nil
-}
-
 // ClientMultiError is an error wrapping multiple validation errors returned by
 // Client.ValidateAll() if the designated constraints aren't met.
 type ClientMultiError []error
@@ -312,11 +300,10 @@ func (m *CreateClientRequest) validate(all bool) error {
 
 	var errors []error
 
-	if err := m._validateUuid(m.GetServiceId()); err != nil {
-		err = CreateClientRequestValidationError{
+	if utf8.RuneCountInString(m.GetServiceId()) < 1 {
+		err := CreateClientRequestValidationError{
 			field:  "ServiceId",
-			reason: "value must be a valid UUID",
-			cause:  err,
+			reason: "value length must be at least 1 runes",
 		}
 		if !all {
 			return err
@@ -389,14 +376,6 @@ func (m *CreateClientRequest) validate(all bool) error {
 
 	if len(errors) > 0 {
 		return CreateClientRequestMultiError(errors)
-	}
-
-	return nil
-}
-
-func (m *CreateClientRequest) _validateUuid(uuid string) error {
-	if matched := _client_uuidPattern.MatchString(uuid); !matched {
-		return errors.New("invalid uuid format")
 	}
 
 	return nil
@@ -639,11 +618,10 @@ func (m *GetClientRequest) validate(all bool) error {
 
 	var errors []error
 
-	if err := m._validateUuid(m.GetServiceId()); err != nil {
-		err = GetClientRequestValidationError{
+	if utf8.RuneCountInString(m.GetServiceId()) < 1 {
+		err := GetClientRequestValidationError{
 			field:  "ServiceId",
-			reason: "value must be a valid UUID",
-			cause:  err,
+			reason: "value length must be at least 1 runes",
 		}
 		if !all {
 			return err
@@ -664,14 +642,6 @@ func (m *GetClientRequest) validate(all bool) error {
 
 	if len(errors) > 0 {
 		return GetClientRequestMultiError(errors)
-	}
-
-	return nil
-}
-
-func (m *GetClientRequest) _validateUuid(uuid string) error {
-	if matched := _client_uuidPattern.MatchString(uuid); !matched {
-		return errors.New("invalid uuid format")
 	}
 
 	return nil
@@ -901,11 +871,10 @@ func (m *ListClientsRequest) validate(all bool) error {
 
 	var errors []error
 
-	if err := m._validateUuid(m.GetServiceId()); err != nil {
-		err = ListClientsRequestValidationError{
+	if utf8.RuneCountInString(m.GetServiceId()) < 1 {
+		err := ListClientsRequestValidationError{
 			field:  "ServiceId",
-			reason: "value must be a valid UUID",
-			cause:  err,
+			reason: "value length must be at least 1 runes",
 		}
 		if !all {
 			return err
@@ -915,14 +884,6 @@ func (m *ListClientsRequest) validate(all bool) error {
 
 	if len(errors) > 0 {
 		return ListClientsRequestMultiError(errors)
-	}
-
-	return nil
-}
-
-func (m *ListClientsRequest) _validateUuid(uuid string) error {
-	if matched := _client_uuidPattern.MatchString(uuid); !matched {
-		return errors.New("invalid uuid format")
 	}
 
 	return nil
@@ -1159,11 +1120,10 @@ func (m *DeleteClientRequest) validate(all bool) error {
 
 	var errors []error
 
-	if err := m._validateUuid(m.GetServiceId()); err != nil {
-		err = DeleteClientRequestValidationError{
+	if utf8.RuneCountInString(m.GetServiceId()) < 1 {
+		err := DeleteClientRequestValidationError{
 			field:  "ServiceId",
-			reason: "value must be a valid UUID",
-			cause:  err,
+			reason: "value length must be at least 1 runes",
 		}
 		if !all {
 			return err
@@ -1184,14 +1144,6 @@ func (m *DeleteClientRequest) validate(all bool) error {
 
 	if len(errors) > 0 {
 		return DeleteClientRequestMultiError(errors)
-	}
-
-	return nil
-}
-
-func (m *DeleteClientRequest) _validateUuid(uuid string) error {
-	if matched := _client_uuidPattern.MatchString(uuid); !matched {
-		return errors.New("invalid uuid format")
 	}
 
 	return nil
@@ -1396,11 +1348,10 @@ func (m *RotateClientSecretRequest) validate(all bool) error {
 
 	var errors []error
 
-	if err := m._validateUuid(m.GetServiceId()); err != nil {
-		err = RotateClientSecretRequestValidationError{
+	if utf8.RuneCountInString(m.GetServiceId()) < 1 {
+		err := RotateClientSecretRequestValidationError{
 			field:  "ServiceId",
-			reason: "value must be a valid UUID",
-			cause:  err,
+			reason: "value length must be at least 1 runes",
 		}
 		if !all {
 			return err
@@ -1421,14 +1372,6 @@ func (m *RotateClientSecretRequest) validate(all bool) error {
 
 	if len(errors) > 0 {
 		return RotateClientSecretRequestMultiError(errors)
-	}
-
-	return nil
-}
-
-func (m *RotateClientSecretRequest) _validateUuid(uuid string) error {
-	if matched := _client_uuidPattern.MatchString(uuid); !matched {
-		return errors.New("invalid uuid format")
 	}
 
 	return nil
@@ -1642,11 +1585,10 @@ func (m *UpdateRedirectUrisRequest) validate(all bool) error {
 
 	var errors []error
 
-	if err := m._validateUuid(m.GetServiceId()); err != nil {
-		err = UpdateRedirectUrisRequestValidationError{
+	if utf8.RuneCountInString(m.GetServiceId()) < 1 {
+		err := UpdateRedirectUrisRequestValidationError{
 			field:  "ServiceId",
-			reason: "value must be a valid UUID",
-			cause:  err,
+			reason: "value length must be at least 1 runes",
 		}
 		if !all {
 			return err
@@ -1719,14 +1661,6 @@ func (m *UpdateRedirectUrisRequest) validate(all bool) error {
 
 	if len(errors) > 0 {
 		return UpdateRedirectUrisRequestMultiError(errors)
-	}
-
-	return nil
-}
-
-func (m *UpdateRedirectUrisRequest) _validateUuid(uuid string) error {
-	if matched := _client_uuidPattern.MatchString(uuid); !matched {
-		return errors.New("invalid uuid format")
 	}
 
 	return nil
@@ -1958,11 +1892,10 @@ func (m *VerifyClientRequest) validate(all bool) error {
 
 	var errors []error
 
-	if err := m._validateUuid(m.GetServiceId()); err != nil {
-		err = VerifyClientRequestValidationError{
+	if utf8.RuneCountInString(m.GetServiceId()) < 1 {
+		err := VerifyClientRequestValidationError{
 			field:  "ServiceId",
-			reason: "value must be a valid UUID",
-			cause:  err,
+			reason: "value length must be at least 1 runes",
 		}
 		if !all {
 			return err
@@ -1994,14 +1927,6 @@ func (m *VerifyClientRequest) validate(all bool) error {
 
 	if len(errors) > 0 {
 		return VerifyClientRequestMultiError(errors)
-	}
-
-	return nil
-}
-
-func (m *VerifyClientRequest) _validateUuid(uuid string) error {
-	if matched := _client_uuidPattern.MatchString(uuid); !matched {
-		return errors.New("invalid uuid format")
 	}
 
 	return nil
