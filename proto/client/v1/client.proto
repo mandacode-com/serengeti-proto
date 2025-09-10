@@ -1,0 +1,121 @@
+syntax = "proto3";
+
+package client.v1;
+
+import "google/protobuf/timestamp.proto";
+import "third_party/validate/validate.proto";
+
+option go_package = "github.com/mandacode-com/seregeti-proto/go/client/v1;clientv1";
+
+// domain types
+enum ClientStatus {
+  CLIENT_STATUS_UNSPECIFIED = 0; // Default value, should not be used
+  CLIENT_STATUS_ACTIVE = 1; // Client is active
+  CLIENT_STATUS_INACTIVE = 2; // Client is inactive
+}
+
+message Client {
+  string service_id = 1 [(validate.rules).string = {min_len: 1}]; // Unique identifier for the service
+  string client_id = 2 [(validate.rules).string = {min_len: 1}];
+  string client_name = 3 [(validate.rules).string = {min_len: 1}]; // Name of the client
+  repeated string redirect_uris = 4 [(validate.rules).repeated = {
+    min_items: 1
+    unique: true
+    items: {
+      string: {uri: true} /* Each redirect URI must be a valid URI */
+    }
+  }]; // List of redirect URIs for the client
+  google.protobuf.Timestamp created_at = 5;
+  google.protobuf.Timestamp updated_at = 6;
+  ClientStatus status = 7; // Status of the client
+}
+
+// service definitions
+service ClientService {
+  rpc CreateClient(CreateClientRequest) returns (CreateClientResponse);
+  rpc GetClient(GetClientRequest) returns (GetClientResponse);
+  rpc ListClients(ListClientsRequest) returns (ListClientsResponse);
+  rpc DeleteClient(DeleteClientRequest) returns (DeleteClientResponse);
+  rpc RotateClientSecret(RotateClientSecretRequest) returns (RotateClientSecretResponse);
+  rpc UpdateRedirectUris(UpdateRedirectUrisRequest) returns (UpdateRedirectUrisResponse);
+  rpc VerifyClient(VerifyClientRequest) returns (VerifyClientResponse);
+}
+
+message CreateClientRequest {
+  string service_id = 1 [(validate.rules).string = {min_len: 1}]; // Unique identifier for the service
+  string client_name = 2 [(validate.rules).string = {min_len: 1}]; // Name of the client
+  repeated string redirect_uris = 3 [(validate.rules).repeated = {
+    min_items: 1
+    unique: true
+    items: {
+      string: {uri: true} /* Each redirect URI must be a valid URI */
+    }
+  }]; // List of redirect URIs for the client
+}
+
+message CreateClientResponse {
+  Client client = 1; // Created client
+  bytes client_secret = 2 [(validate.rules).bytes = {min_len: 1}]; // Secret for the client, using bytes for flexibility
+}
+
+message GetClientRequest {
+  string service_id = 1 [(validate.rules).string = {min_len: 1}]; // Unique identifier for the service
+  string client_id = 2 [(validate.rules).string = {min_len: 1}]; // Unique identifier for the client
+}
+
+message GetClientResponse {
+  Client client = 1; // Client details
+}
+
+message ListClientsRequest {
+  string service_id = 1 [(validate.rules).string = {min_len: 1}]; // Unique identifier for the service
+}
+
+message ListClientsResponse {
+  repeated Client clients = 1; // List of clients
+}
+
+message DeleteClientRequest {
+  string service_id = 1 [(validate.rules).string = {min_len: 1}]; // Unique identifier for the service
+  string client_id = 2 [(validate.rules).string = {min_len: 1}]; // Unique identifier for the client to be deleted
+}
+
+message DeleteClientResponse {
+  bool success = 1; // Indicates if the deletion was successful
+}
+
+message RotateClientSecretRequest {
+  string service_id = 1 [(validate.rules).string = {min_len: 1}]; // Unique identifier for the service
+  string client_id = 2 [(validate.rules).string = {min_len: 1}]; // Unique identifier for the client
+}
+
+message RotateClientSecretResponse {
+  bytes new_client_secret = 1 [(validate.rules).bytes = {min_len: 1}]; // New secret for the client, using bytes for flexibility
+}
+
+message UpdateRedirectUrisRequest {
+  string service_id = 1 [(validate.rules).string = {min_len: 1}]; // Unique identifier for the service
+  string client_id = 2 [(validate.rules).string = {min_len: 1}]; // Unique identifier for the client
+  repeated string redirect_uris = 3 [(validate.rules).repeated = {
+    min_items: 1
+    unique: true
+    items: {
+      string: {uri: true} /* Each redirect URI must be a valid URI */
+    }
+  }]; // Updated list of redirect URIs for the client
+}
+
+message UpdateRedirectUrisResponse {
+  Client client = 1; // Client with updated redirect URIs
+}
+
+message VerifyClientRequest {
+  string service_id = 1 [(validate.rules).string = {min_len: 1}]; // Unique identifier for the service
+  string client_id = 2 [(validate.rules).string = {min_len: 1}]; // Unique identifier for the client
+  bytes client_secret = 3 [(validate.rules).bytes = {min_len: 1}]; // Secret for the client, using bytes for flexibility
+}
+
+message VerifyClientResponse {
+  bool verified = 1; // Indicates if the client was successfully verified
+  Client client = 2; // Verified client details
+}

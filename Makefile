@@ -11,6 +11,7 @@ GO_GENERATED:= ./go
 # ──────────────────────────────
 gen-proto:
 	echo "Generating Protobuf files..."
+	rm -rf $(GO_GENERATED)/*
 	mkdir -p $(GO_GENERATED)
 	protoc \
 		-I $(PROTO_SRC) \
